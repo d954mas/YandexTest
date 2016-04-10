@@ -1,30 +1,30 @@
 package com.d954mas.android.yandextest;
 
 import android.app.ProgressDialog;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AbsListView;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class ArtistListActivity extends AppCompatActivity {
     private static final String LIST_STATE = "listState";
+    private static final String ARTIST_JSON_KEY = "cachedArtists";
     private Parcelable mListState = null;
 
     @Override
@@ -86,41 +86,53 @@ public class ArtistListActivity extends AppCompatActivity {
 
 
     protected List<ArtistBean> readArtistJson() throws JSONException {
-        String jsonString = loadJSONStringFromResources();
+        String jsonString = getArtisJsonString();
         JSONArray artistList = null;
         artistList = new JSONArray(jsonString);
         List<ArtistBean> artist = new ArrayList<>();
         for (int i = 0; i < artistList.length(); i++) {
             artist.add(new ArtistBean(artistList.getJSONObject(i)));
         }
-        Collections.sort(artist, new Comparator<ArtistBean>() {
-            @Override
-            public int compare(ArtistBean lhs, ArtistBean rhs) {
-                return lhs.name.compareTo(rhs.name);
-            }
-        });
+        Collections.sort(artist, (lhs, rhs) -> lhs.name.compareTo(rhs.name));
         return artist;
     }
 
     //todo сделать более лаконичное чтение
     //loading json file with artist
-    protected String loadJSONStringFromResources() {
-        String json = null;
-        try {
-            InputStream is = getResources().openRawResource(R.raw.artists);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
+    protected String getArtisJsonString() {
+        String cachedJson=CacheHelper.readCacheString(ArtistListActivity.this, ARTIST_JSON_KEY);
+        if(cachedJson==null){
+            try {
+                //todo Добавить обработку ошибок при отсутствие интернета
+                cachedJson= loadAtristsFromWeb();
+                CacheHelper.cacheString(ArtistListActivity.this,ARTIST_JSON_KEY,cachedJson);
+                return cachedJson;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            return cachedJson;
         }
-        return json;
+        throw new RuntimeException("something wrong");
     }
 
+    protected String loadAtristsFromWeb() throws IOException {
+        URL url = new URL("http://download.cdn.yandex.net/mobilization-2016/artists.json");
+        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        urlConnection.setRequestMethod("GET");
+        urlConnection.connect();
+        InputStream inputStream = urlConnection.getInputStream();
+        StringBuffer buffer = new StringBuffer();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
+        String line;
+        while ((line = reader.readLine()) != null) {
+            buffer.append(line);
+        }
+        reader.close();
+        String json = buffer.toString();
+        return json;
+    }
     @Override
     protected void onRestoreInstanceState(Bundle state) {
         super.onRestoreInstanceState(state);
