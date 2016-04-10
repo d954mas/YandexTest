@@ -1,11 +1,18 @@
 package com.d954mas.android.yandextest;
 
+import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Parcelable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,80 +26,29 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ArtistListActivity extends AppCompatActivity {
-    private static final String LIST_STATE = "listState";
+import layout.GenresFragment;
+
+public class ArtistListActivity extends AppCompatActivity  {
     private static final String ARTIST_JSON_KEY = "cachedArtists";
-    private Parcelable mListState = null;
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    ViewPagerAdapter viewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artist_list);
-
-        //загружаем данные с сервера либо с кэша
-        new AsyncTask<Void, Void, Void>() {
-            protected ProgressDialog progressDialog;
-            protected List<ArtistBean> artists;
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                progressDialog = new ProgressDialog(ArtistListActivity.this);
-                progressDialog.setCancelable(false);
-                progressDialog.setMessage("Loading...");
-                progressDialog.show();
-            }
-
-            @Override
-            protected Void doInBackground(Void... voids) {
-                try {
-                    artists = readArtistJson();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            //Освобождаем ресурсы(Bitmap)
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                progressDialog.dismiss();
-                ListView lvMain = (ListView) findViewById(R.id.artist_list);
-                lvMain.setTextFilterEnabled(true);
-
-                //освобождение ресурсов для Bitmap,вроде не нежну
-                //todo уточнить нужно ли?
-              /*  lvMain.setRecyclerListener(view -> {
-                    ImageView imageView= ((ImageView) view.findViewById(R.id.artist_element_image));
-                    Drawable drawable = imageView.getDrawable();
-                   // if (drawable instanceof BitmapDrawable) {// это всегда правда
-                        BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-                        Bitmap bitmap = bitmapDrawable.getBitmap();
-                        if(bitmap!=null && !bitmap.isRecycled())bitmap.recycle();
-                });*/
-                ArtistArrayAdapter adapter = new ArtistArrayAdapter(ArtistListActivity.this, artists);
-                // присваиваем адаптер списку
-                lvMain.setAdapter(adapter);
-                lvMain.setOnItemClickListener((parent, view, position, id) -> {
-                    ArtistBean artistBean= (ArtistBean) adapter.getItem(position);
-                    Intent intent=new Intent(ArtistListActivity.this,ArtistActivity.class);
-                    intent.putExtra("artist",artistBean.getJson().toString());
-                    startActivity(intent);
-
-                });
-                if (savedInstanceState != null) {
-                    lvMain.onRestoreInstanceState(savedInstanceState.getParcelable(LIST_STATE));
-                }
-            }
-        }.execute();
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(viewPagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+        new LoadAsyncTask().execute();
     }
 
 
@@ -147,22 +103,49 @@ public class ArtistListActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(Bundle state) {
         super.onRestoreInstanceState(state);
-        mListState = state.getParcelable(LIST_STATE);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (mListState != null)
-            ((ListView)findViewById(R.id.artist_list)).onRestoreInstanceState(mListState);
-        mListState = null;
     }
 
     @Override
     protected void onSaveInstanceState(Bundle state) {
         super.onSaveInstanceState(state);
-        mListState = ((ListView)findViewById(R.id.artist_list)).onSaveInstanceState();
-        state.putParcelable(LIST_STATE, mListState);
+    }
+
+    //загружаем данные с сервера либо с кэша
+    private  class LoadAsyncTask extends AsyncTask<Void, Void, Void> {
+        protected ProgressDialog progressDialog;
+        protected List<ArtistBean> artists;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(ArtistListActivity.this);
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Loading...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                artists = readArtistJson();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        //Освобождаем ресурсы(Bitmap)
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            viewPagerAdapter.getArtistsFragment().setData(artists);
+            progressDialog.dismiss();
+        }
     }
 }
 

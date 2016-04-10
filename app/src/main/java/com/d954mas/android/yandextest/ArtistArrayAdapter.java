@@ -54,7 +54,7 @@ public class ArtistArrayAdapter extends BaseAdapter{
         // используем созданные, но не используемые view
         View view = convertView;
         if (view == null) {
-            view = lInflater.inflate(R.layout.artist_list_item, parent, false);
+           view = lInflater.inflate(R.layout.artist_list_item, parent, false);
         }
         ImageView imageView= ((ImageView) view.findViewById(R.id.artist_element_image));
         imageView.setImageBitmap(null);

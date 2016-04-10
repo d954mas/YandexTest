@@ -14,7 +14,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class ArtistActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
