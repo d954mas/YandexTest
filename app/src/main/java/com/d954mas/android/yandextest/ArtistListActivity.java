@@ -1,10 +1,14 @@
 package com.d954mas.android.yandextest;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -66,6 +70,8 @@ public class ArtistListActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 ListView lvMain = (ListView) findViewById(R.id.artist_list);
                 lvMain.setTextFilterEnabled(true);
+
+
               /*  lvMain.setRecyclerListener(view -> {
                     ImageView imageView= ((ImageView) view.findViewById(R.id.artist_element_image));
                     Drawable drawable = imageView.getDrawable();
@@ -77,6 +83,11 @@ public class ArtistListActivity extends AppCompatActivity {
                 ArtistArrayAdapter adapter = new ArtistArrayAdapter(ArtistListActivity.this, artists);
                 // присваиваем адаптер списку
                 lvMain.setAdapter(adapter);
+                lvMain.setOnItemClickListener((parent, view, position, id) -> {
+                    ArtistBean artistBean= (ArtistBean) adapter.getItem(position);
+                    Intent intent=new Intent(ArtistListActivity.this,ArtistActivity.class);
+                    startActivity(intent);
+                });
                 if (savedInstanceState != null) {
                     lvMain.onRestoreInstanceState(savedInstanceState.getParcelable(LIST_STATE));
                 }
