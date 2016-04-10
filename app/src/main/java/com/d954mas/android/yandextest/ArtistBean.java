@@ -21,7 +21,7 @@ import java.util.ArrayList;
  */
 public class ArtistBean {
     private String url;
-    protected JSONObject artist;
+    protected JSONObject json;
 
     public long id;
     public String name;
@@ -42,30 +42,33 @@ public class ArtistBean {
         changeData(artist);
     }
 
-    public void changeData(JSONObject artist){
-        this.artist = artist;
+    public void changeData(JSONObject json){
+        this.json = json;
         genres.clear();
         try {
-            id=artist.getLong("id");
-            name=artist.getString("name");
-            JSONArray genresJsonArray=artist.getJSONArray("genres");
+            id=json.getLong("id");
+            name=json.getString("name");
+            JSONArray genresJsonArray=json.getJSONArray("genres");
             for (int i = 0; i < genresJsonArray.length(); i++) {
                 genres.add(genresJsonArray.getString(i));
             }
-            smallImageUrl=artist.getJSONObject("cover").getString("small");
-            bigImageUrl=artist.getJSONObject("cover").getString("big");
-            tracks=artist.getInt("tracks");
-            albums=artist.getInt("albums");
-            if(artist.has("link")){
-                link=artist.getString("link");
+            smallImageUrl=json.getJSONObject("cover").getString("small");
+            bigImageUrl=json.getJSONObject("cover").getString("big");
+            tracks=json.getInt("tracks");
+            albums=json.getInt("albums");
+            if(json.has("link")){
+                link=json.getString("link");
             }else{
                 link="";
             }
 
-            description=artist.getString("description");
+            description=json.getString("description");
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
+    public JSONObject getJson() {
+        return json;
+    }
 }

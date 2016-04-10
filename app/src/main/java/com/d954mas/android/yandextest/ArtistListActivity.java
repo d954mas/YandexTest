@@ -36,10 +36,7 @@ public class ArtistListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artist_list);
 
-
-
-        //в данном примере это возможно избыточно,тк данные грузятся быстро,
-        //и пользователь не успевает увидить полосу загрузки,но если вдруг данных станет много,то это пригодится
+        //загружаем данные с сервера либо с кэша
         new AsyncTask<Void, Void, Void>() {
             protected ProgressDialog progressDialog;
             protected List<ArtistBean> artists;
@@ -71,7 +68,8 @@ public class ArtistListActivity extends AppCompatActivity {
                 ListView lvMain = (ListView) findViewById(R.id.artist_list);
                 lvMain.setTextFilterEnabled(true);
 
-
+                //освобождение ресурсов для Bitmap,вроде не нежну
+                //todo уточнить нужно ли?
               /*  lvMain.setRecyclerListener(view -> {
                     ImageView imageView= ((ImageView) view.findViewById(R.id.artist_element_image));
                     Drawable drawable = imageView.getDrawable();
@@ -86,7 +84,9 @@ public class ArtistListActivity extends AppCompatActivity {
                 lvMain.setOnItemClickListener((parent, view, position, id) -> {
                     ArtistBean artistBean= (ArtistBean) adapter.getItem(position);
                     Intent intent=new Intent(ArtistListActivity.this,ArtistActivity.class);
+                    intent.putExtra("artist",artistBean.getJson().toString());
                     startActivity(intent);
+
                 });
                 if (savedInstanceState != null) {
                     lvMain.onRestoreInstanceState(savedInstanceState.getParcelable(LIST_STATE));
