@@ -1,22 +1,14 @@
 package com.d954mas.android.yandextest;
 
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Parcelable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,13 +23,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import layout.GenresFragment;
-
 public class ArtistListActivity extends AppCompatActivity  {
     private static final String ARTIST_JSON_KEY = "cachedArtists";
     TabLayout tabLayout;
     ViewPager viewPager;
     ViewPagerAdapter viewPagerAdapter;
+    LoadAsyncTask loadAsyncTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +36,40 @@ public class ArtistListActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_artist_list);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         viewPager = (ViewPager) findViewById(R.id.viewPager);
+        loadAsyncTask=new LoadAsyncTask();
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
-        new LoadAsyncTask().execute();
+        //todo возможно не стоит вызывать эту таску при каждом пересоздании?
+        loadAsyncTask.execute();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.action_bar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.update:
+                if (loadAsyncTask.getStatus() == AsyncTask.Status.RUNNING) {
+
+                } else {
+                    loadAsyncTask = new LoadAsyncTask();
+                    loadAsyncTask.execute();
+                }
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     protected List<ArtistBean> readArtistJson() throws JSONException {
         String jsonString = getArtisJsonString();
+        if(jsonString==null)return new ArrayList<>();
         JSONArray artistList = null;
         artistList = new JSONArray(jsonString);
         List<ArtistBean> artist = new ArrayList<>();
@@ -76,11 +92,12 @@ public class ArtistListActivity extends AppCompatActivity  {
                 return cachedJson;
             } catch (IOException e) {
                 e.printStackTrace();
+                return null;
             }
         }else{
             return cachedJson;
         }
-        throw new RuntimeException("something wrong");
+       // throw new RuntimeException("something wrong");
     }
 
     protected String loadAtristsFromWeb() throws IOException {

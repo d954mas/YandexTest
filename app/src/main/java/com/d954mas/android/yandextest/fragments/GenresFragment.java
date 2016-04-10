@@ -1,4 +1,4 @@
-package layout;
+package com.d954mas.android.yandextest.fragments;
 
 
 import android.os.Bundle;

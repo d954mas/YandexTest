@@ -3,19 +3,13 @@ package com.d954mas.android.yandextest;
 /**
  * Created by user on 10.04.2016.
  */
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-import layout.GenresFragment;
+import com.d954mas.android.yandextest.fragments.GenresFragment;
 
 /**
  * Created by Admin on 11-12-2015.
@@ -23,6 +17,7 @@ import layout.GenresFragment;
 public class ViewPagerAdapter extends FragmentPagerAdapter {
     protected ArtistsFragment artistsFragment;
     protected GenresFragment genresFragment;
+
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -71,6 +66,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
             default:return "";
         }
     }
+
 
     public ArtistsFragment getArtistsFragment() {
         return artistsFragment;
