@@ -1,19 +1,9 @@
 package com.d954mas.android.yandextest;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -63,6 +53,10 @@ public class ArtistBean {
             }
 
             description=json.getString("description");
+            if(!description.isEmpty()){//игнорируем пустые строки
+                description=Character.toUpperCase(description.charAt(0))+description.substring(1,description.length()-1);
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
