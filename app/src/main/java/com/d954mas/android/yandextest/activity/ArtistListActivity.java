@@ -1,38 +1,34 @@
-package com.d954mas.android.yandextest;
+package com.d954mas.android.yandextest.activity;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.d954mas.android.yandextest.R;
+import com.d954mas.android.yandextest.fragments.ArtistListFragment;
 import com.d954mas.android.yandextest.fragments.DataLoadingFragment;
+import com.d954mas.android.yandextest.fragments.InternerErrorFragment;
 import com.d954mas.android.yandextest.models.DataLoadingModel;
 
 public class ArtistListActivity extends AppCompatActivity implements DataLoadingModel.Observer {
     private static final String TAG = "ArtistListActivity";
     private static final String TAG_WORKER = "TAG_WORKER";
-    TabLayout tabLayout;
-    ViewPager viewPager;
-    ViewPagerAdapter viewPagerAdapter;
     DataLoadingModel dataLoadingModel;
+    ArtistListFragment artistListFragment;
+    InternerErrorFragment internetErrorFragment;
     private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artist_list);
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(viewPagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
         final DataLoadingFragment retainedWorkerFragment =
                 (DataLoadingFragment) getSupportFragmentManager().findFragmentByTag(TAG_WORKER);
-
         if (retainedWorkerFragment != null) {
             dataLoadingModel = retainedWorkerFragment.getDataLoadingModel();
         } else {
@@ -42,8 +38,18 @@ public class ArtistListActivity extends AppCompatActivity implements DataLoading
                     .commit();
             dataLoadingModel = workerFragment.getDataLoadingModel();
         }
+
+        artistListFragment=new ArtistListFragment();
+        internetErrorFragment=new InternerErrorFragment();
+
         dataLoadingModel.registerObserver(this);
         dataLoadingModel.loadData(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dataLoadingModel.unregisterObserver(this);
     }
 
     @Override
@@ -84,17 +90,28 @@ public class ArtistListActivity extends AppCompatActivity implements DataLoading
         progressDialog.setCancelable(false);
         progressDialog.setMessage("Loading...");
         progressDialog.show();
+        Log.i(TAG, "start getting data");
     }
 
     @Override
     public void onSignInSucceeded(DataLoadingModel signInModel) {
+        Log.i(TAG,"successfully get data");
         progressDialog.dismiss();
-        viewPagerAdapter.getArtistsFragment().setData(signInModel.getArtists());
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                .beginTransaction();
+        fragmentTransaction.replace(R.id.container, artistListFragment);
+        fragmentTransaction.commit();
+        artistListFragment.setData(signInModel.getArtists());
     }
 
     @Override
     public void onSignInFailed(DataLoadingModel signInModel) {
         progressDialog.dismiss();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager()
+                .beginTransaction();
+        fragmentTransaction.replace(R.id.container, internetErrorFragment);
+        fragmentTransaction.commit();
+        Log.i(TAG, "failed get data");
     }
 }
 

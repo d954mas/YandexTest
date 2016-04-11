@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.d954mas.android.yandextest.ArtistBean;
-import com.d954mas.android.yandextest.CacheHelper;
+import com.d954mas.android.yandextest.utils.CacheHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -131,6 +131,7 @@ public class DataLoadingModel {
             if(jsonString==null){
                 try {
                     jsonString = loadAtristsFromWeb();
+                    CacheHelper.cacheString(context, ARTIST_JSON_KEY,jsonString);
                     Log.i(TAG,"get data from internet");
                     if(jsonString==null)return null;
                 } catch (IOException e) {

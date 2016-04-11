@@ -9,7 +9,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 import android.view.ViewGroup;
 
+import com.d954mas.android.yandextest.fragments.ArtistsFragment;
 import com.d954mas.android.yandextest.fragments.GenresFragment;
+
+import java.util.List;
 
 /**
  * Created by Admin on 11-12-2015.
@@ -17,6 +20,11 @@ import com.d954mas.android.yandextest.fragments.GenresFragment;
 public class ViewPagerAdapter extends FragmentPagerAdapter {
     protected ArtistsFragment artistsFragment;
     protected GenresFragment genresFragment;
+    private List<ArtistBean> data;
+
+    public void setData(List<ArtistBean> data) {
+        this.data = data;
+    }
 
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -28,6 +36,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         switch (position){
             case 0:{
                 artistsFragment=new ArtistsFragment();
+                artistsFragment.setData(data);
                 return artistsFragment;
             }
             case 1:{
@@ -44,6 +53,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         switch (position){
             case 0:
                 artistsFragment= (ArtistsFragment) o;
+                artistsFragment.setData(data);
                 break;
             case 1:{
                 genresFragment= (GenresFragment) o;
@@ -75,4 +85,6 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public GenresFragment getGenresFragment() {
         return genresFragment;
     }
+
+
 }

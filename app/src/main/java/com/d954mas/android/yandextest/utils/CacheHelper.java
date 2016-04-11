@@ -1,4 +1,4 @@
-package com.d954mas.android.yandextest;
+package com.d954mas.android.yandextest.utils;
 
 import android.content.Context;
 import android.util.Log;
@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URLEncoder;
 
 /**
  * Created by user on 10.04.2016.

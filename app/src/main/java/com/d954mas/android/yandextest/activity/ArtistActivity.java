@@ -1,4 +1,4 @@
-package com.d954mas.android.yandextest;
+package com.d954mas.android.yandextest.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.d954mas.android.yandextest.ArtistBean;
+import com.d954mas.android.yandextest.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
