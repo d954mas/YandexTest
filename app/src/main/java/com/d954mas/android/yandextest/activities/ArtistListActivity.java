@@ -1,13 +1,16 @@
 package com.d954mas.android.yandextest.activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.d954mas.android.yandextest.R;
 import com.d954mas.android.yandextest.fragments.ArtistListFragment;
@@ -28,6 +31,7 @@ public class ArtistListActivity extends AppCompatActivity implements DataLoading
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artist_list);
         ActionBar actionBar=getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
         if(actionBar!=null)actionBar.setTitle("Исполнители");
         final DataLoadingFragment retainedWorkerFragment =
                 (DataLoadingFragment) getSupportFragmentManager().findFragmentByTag(TAG_WORKER);
@@ -62,7 +66,19 @@ public class ArtistListActivity extends AppCompatActivity implements DataLoading
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+       switch (item.getItemId()){
+           case R.id.search:
+               Intent intent=new Intent(this,SearchActivity.class);
+               startActivityForResult(intent,0);
+               return true;
+           case android.R.id.home:
+               NavUtils.navigateUpTo(this,new Intent());
+       }
+        return super.onOptionsItemSelected(item);
 
+    }
 
     @Override
     protected void onRestoreInstanceState(Bundle state) {
