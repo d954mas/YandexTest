@@ -7,7 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.GridView;
 
 import com.d954mas.android.yandextest.ArtistArrayAdapter;
 import com.d954mas.android.yandextest.ArtistBean;
@@ -40,7 +40,7 @@ public class ArtistsFragment extends Fragment {
 
         }else{
             if(artists!=null){
-                ListView lvMain = (ListView) root.findViewById(R.id.artist_list);
+                GridView lvMain = (GridView) root.findViewById(R.id.artist_list);
                 ArtistArrayAdapter adapter = new ArtistArrayAdapter(getContext(), artists);
                 lvMain.setAdapter(adapter);
                 lvMain.setOnItemClickListener((parent, view, position, id) -> {
