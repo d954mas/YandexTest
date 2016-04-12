@@ -3,6 +3,7 @@ package com.d954mas.android.yandextest.activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -26,6 +27,8 @@ public class ArtistListActivity extends AppCompatActivity implements DataLoading
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_artist_list);
+        ActionBar actionBar=getSupportActionBar();
+        if(actionBar!=null)actionBar.setTitle("Исполнители");
         final DataLoadingFragment retainedWorkerFragment =
                 (DataLoadingFragment) getSupportFragmentManager().findFragmentByTag(TAG_WORKER);
         if (retainedWorkerFragment != null) {

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ArtistList</string>
+    <string name="app_name">Исполнители</string>
     <string name="biography">Биография</string>
     <string name="artistListTitle">Исполнители</string>
 
