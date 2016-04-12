@@ -2,16 +2,13 @@ package com.d954mas.android.yandextest;
 
 import android.app.Application;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.os.Handler;
 
+import com.d954mas.android.yandextest.utils.DataSingleton;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.display.SimpleBitmapDisplayer;
 
 /**
  * Created by user on 10.04.2016.
@@ -21,7 +18,15 @@ public class ArtistApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        DataSingleton.init(getApplicationContext());
         initImageLoader(getApplicationContext());
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        DataSingleton.dispose();
+
     }
 
     public static void initImageLoader(Context context) {
@@ -44,7 +49,7 @@ public class ArtistApplication extends Application {
         config.diskCacheFileNameGenerator(new Md5FileNameGenerator());
         config.diskCacheSize(50 * 1024 * 1024); // 50 MiB
         config.tasksProcessingOrder(QueueProcessingType.LIFO);
-        config.writeDebugLogs(); // Remove for release app
+       // config.writeDebugLogs(); // Remove for release app
 
         // Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(config.build());

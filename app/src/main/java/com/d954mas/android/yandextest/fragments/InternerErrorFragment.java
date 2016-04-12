@@ -26,7 +26,7 @@ public class InternerErrorFragment extends Fragment {
         View view= inflater.inflate(R.layout.internet_error_fragment,container,false);
         if(dataLoadingModel!=null){
             view.findViewById(R.id.reconnect_button).setOnClickListener(v->{
-                dataLoadingModel.loadData(getContext());
+                dataLoadingModel.loadData();
             });
         }else{
             throw new RuntimeException("must have dataLoadingModel");

@@ -1,14 +1,10 @@
 package com.d954mas.android.yandextest.models;
 
-import android.content.Context;
 import android.database.Observable;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.d954mas.android.yandextest.utils.CacheHelper;
-
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.d954mas.android.yandextest.utils.DataSingleton;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,32 +12,29 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by user on 11.04.2016.
  */
 public class DataLoadingModel {
+    //модель для асинхронной загрузки данных.
+
     private static final String TAG = "DataLoadingModel";
-    private static final String ARTIST_JSON_KEY = "cachedArtists";
 
     private final DataLoadingObservable mObservable = new DataLoadingObservable();
     private LoadAsyncTask loadingTask;
     private boolean isWorking;
-    private List<ArtistModel> artists;
 
     public DataLoadingModel() {
     }
 
-    public void loadData(Context context) {
+    public void loadData() {
         if (isWorking) {
             return;
         }
         mObservable.notifyStarted();
         isWorking = true;
-        loadingTask = new LoadAsyncTask(context);
+        loadingTask = new LoadAsyncTask();
         loadingTask.execute();
     }
 
@@ -61,10 +54,6 @@ public class DataLoadingModel {
 
     public void unregisterObserver(final Observer observer) {
         mObservable.unregisterObserver(observer);
-    }
-
-    public List<ArtistModel> getArtists() {
-        return artists;
     }
 
     public interface Observer {
@@ -96,13 +85,6 @@ public class DataLoadingModel {
     }
     private class LoadAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
-        private Context context;
-
-        public LoadAsyncTask(Context context){
-            this.context = context;
-        }
-
-
         protected String loadAtristsFromWeb() throws IOException {
             URL url = new URL("http://download.cdn.yandex.net/mobilization-2016/artists.json");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -121,40 +103,22 @@ public class DataLoadingModel {
             return json;
         }
 
-        protected List<ArtistModel> readArtistJson(){
-            if(artists!=null){
-                Log.i(TAG,"already loaded");
-                return artists;
-            }
-            String jsonString=CacheHelper.readCacheString(context, ARTIST_JSON_KEY);
-            if(jsonString==null){
+        protected boolean readArtistJson() {
+            if (DataSingleton.get().hasData()) {
+                Log.i(TAG, "already loaded");
+                return true;
+            } else {
                 try {
-                    jsonString = loadAtristsFromWeb();
-                    CacheHelper.cacheString(context, ARTIST_JSON_KEY,jsonString);
-                    Log.i(TAG,"get data from internet");
-                    if(jsonString==null)return null;
+                    String jsonString = loadAtristsFromWeb();
+                    DataSingleton.get().setData(jsonString);
+                    return true;
                 } catch (IOException e) {
+                    Log.i(TAG, "failed to load data");
                     e.printStackTrace();
-                    return null;
+                    return false;
                 }
-            }else{
-                Log.i(TAG,"get data from cache");
             }
 
-            JSONArray artistList = null;
-            try {
-                List<ArtistModel> artist = new ArrayList<>();
-                artistList = new JSONArray(jsonString);
-                for (int i = 0; i < artistList.length(); i++) {
-                    artist.add(new ArtistModel(artistList.getJSONObject(i)));
-                }
-                Collections.sort(artist, (lhs, rhs) -> lhs.name.compareTo(rhs.name));
-                return artist;
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-                return null;
-            }
         }
 
         @Override
@@ -164,9 +128,7 @@ public class DataLoadingModel {
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-            artists = readArtistJson();
-            if(artists!=null)return true;
-            return false;
+            return readArtistJson();
         }
 
         //Освобождаем ресурсы(Bitmap)

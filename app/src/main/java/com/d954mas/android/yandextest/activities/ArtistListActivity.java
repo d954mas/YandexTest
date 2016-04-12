@@ -17,6 +17,7 @@ import com.d954mas.android.yandextest.fragments.ArtistListFragment;
 import com.d954mas.android.yandextest.fragments.DataLoadingFragment;
 import com.d954mas.android.yandextest.fragments.InternerErrorFragment;
 import com.d954mas.android.yandextest.models.DataLoadingModel;
+import com.d954mas.android.yandextest.utils.DataSingleton;
 
 public class ArtistListActivity extends AppCompatActivity implements DataLoadingModel.Observer {
     private static final String TAG = "ArtistListActivity";
@@ -50,7 +51,7 @@ public class ArtistListActivity extends AppCompatActivity implements DataLoading
         internetErrorFragment.setDataLoadingModel(dataLoadingModel);
 
         dataLoadingModel.registerObserver(this);
-        dataLoadingModel.loadData(this);
+        dataLoadingModel.loadData();
     }
 
     @Override
@@ -71,7 +72,7 @@ public class ArtistListActivity extends AppCompatActivity implements DataLoading
        switch (item.getItemId()){
            case R.id.search:
                Intent intent=new Intent(this,SearchActivity.class);
-               startActivityForResult(intent,0);
+               startActivityForResult(intent, 0);
                return true;
            case android.R.id.home:
                NavUtils.navigateUpTo(this,new Intent());
@@ -112,7 +113,7 @@ public class ArtistListActivity extends AppCompatActivity implements DataLoading
                 .beginTransaction();
         fragmentTransaction.replace(R.id.container, artistListFragment);
         fragmentTransaction.commit();
-        artistListFragment.setData(signInModel.getArtists());
+        artistListFragment.setData(DataSingleton.get().getArtists());
     }
 
     @Override
