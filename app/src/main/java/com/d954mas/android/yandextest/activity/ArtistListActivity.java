@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 
 import com.d954mas.android.yandextest.R;
 import com.d954mas.android.yandextest.fragments.ArtistListFragment;
@@ -41,6 +40,7 @@ public class ArtistListActivity extends AppCompatActivity implements DataLoading
 
         artistListFragment=new ArtistListFragment();
         internetErrorFragment=new InternerErrorFragment();
+        internetErrorFragment.setDataLoadingModel(dataLoadingModel);
 
         dataLoadingModel.registerObserver(this);
         dataLoadingModel.loadData(this);
@@ -60,14 +60,6 @@ public class ArtistListActivity extends AppCompatActivity implements DataLoading
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.update:
-               dataLoadingModel.loadData(this);
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onRestoreInstanceState(Bundle state) {
@@ -112,6 +104,7 @@ public class ArtistListActivity extends AppCompatActivity implements DataLoading
         fragmentTransaction.replace(R.id.container, internetErrorFragment);
         fragmentTransaction.commit();
         Log.i(TAG, "failed get data");
+
     }
 }
 
