@@ -22,6 +22,7 @@ import com.d954mas.android.yandextest.utils.DataSingleton;
 public class ArtistListActivity extends AppCompatActivity implements DataLoadingModel.Observer {
     private static final String TAG = "ArtistListActivity";
     private static final String TAG_WORKER = "TAG_WORKER";
+    private static final String TAG_ARTISTS = "TAG_ARTISTS";
     DataLoadingModel dataLoadingModel;
     ArtistListFragment artistListFragment;
     InternerErrorFragment internetErrorFragment;
@@ -46,10 +47,13 @@ public class ArtistListActivity extends AppCompatActivity implements DataLoading
             dataLoadingModel = workerFragment.getDataLoadingModel();
         }
 
-        artistListFragment=new ArtistListFragment();
-        internetErrorFragment=new InternerErrorFragment();
-        internetErrorFragment.setDataLoadingModel(dataLoadingModel);
-
+        if(savedInstanceState==null){
+            artistListFragment=new ArtistListFragment();
+            internetErrorFragment=new InternerErrorFragment();
+            internetErrorFragment.setDataLoadingModel(dataLoadingModel);
+        }else{
+            artistListFragment= (ArtistListFragment) getSupportFragmentManager().findFragmentByTag(TAG_ARTISTS);
+        }
         dataLoadingModel.registerObserver(this);
         dataLoadingModel.loadData();
     }
@@ -111,7 +115,7 @@ public class ArtistListActivity extends AppCompatActivity implements DataLoading
         progressDialog.dismiss();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
-        fragmentTransaction.replace(R.id.container, artistListFragment);
+        fragmentTransaction.replace(R.id.container, artistListFragment,TAG_ARTISTS);
         fragmentTransaction.commit();
         artistListFragment.setData(DataSingleton.get().getArtists());
     }

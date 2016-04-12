@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.d954mas.android.yandextest.fragments.ArtistsFragment;
 import com.d954mas.android.yandextest.fragments.GenresFragment;
 import com.d954mas.android.yandextest.models.ArtistModel;
+import com.d954mas.android.yandextest.utils.DataSingleton;
 
 import java.util.List;
 
@@ -25,6 +26,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     public void setData(List<ArtistModel> data) {
         this.data = data;
+        if(artistsFragment!=null){
+            artistsFragment.setData(data);
+        }
     }
 
     public ViewPagerAdapter(FragmentManager fm) {
@@ -37,7 +41,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         switch (position){
             case 0:{
                 artistsFragment=new ArtistsFragment();
-                artistsFragment.setData(data);
+                artistsFragment.setData(DataSingleton.get().getArtists());
                 return artistsFragment;
             }
             case 1:{
@@ -51,10 +55,11 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         Object o= super.instantiateItem(container, position);
+        Log.i("ViewPagerAdapter","instantiateItemItem: "+position);
         switch (position){
             case 0:
                 artistsFragment= (ArtistsFragment) o;
-                artistsFragment.setData(data);
+                artistsFragment.setData(DataSingleton.get().getArtists());
                 break;
             case 1:{
                 genresFragment= (GenresFragment) o;
