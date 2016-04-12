@@ -1,4 +1,4 @@
-package com.d954mas.android.yandextest.activity;
+package com.d954mas.android.yandextest.activities;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;

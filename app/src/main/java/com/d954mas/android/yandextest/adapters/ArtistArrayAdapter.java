@@ -1,34 +1,28 @@
-package com.d954mas.android.yandextest;
+package com.d954mas.android.yandextest.adapters;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.d954mas.android.yandextest.R;
+import com.d954mas.android.yandextest.models.ArtistModel;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by user on 09.04.2016.
  */
 public class ArtistArrayAdapter extends BaseAdapter{
-    protected List<ArtistBean> data;
+    protected List<ArtistModel> data;
     protected LayoutInflater lInflater;
 
 
-    public ArtistArrayAdapter(Context context, List<ArtistBean> data){
+    public ArtistArrayAdapter(Context context, List<ArtistModel> data){
         this.data = data;
         lInflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -58,9 +52,9 @@ public class ArtistArrayAdapter extends BaseAdapter{
         }
         ImageView imageView= ((ImageView) view.findViewById(R.id.artist_element_image));
         imageView.setImageBitmap(null);
-        ArtistBean artistBean= (ArtistBean) getItem(position);
-        ImageLoader.getInstance().displayImage(artistBean.smallImageUrl,imageView);
-                ((TextView) view.findViewById(R.id.artist_element_name)).setText(artistBean.name);
+        ArtistModel artistModel = (ArtistModel) getItem(position);
+        ImageLoader.getInstance().displayImage(artistModel.smallImageUrl,imageView);
+                ((TextView) view.findViewById(R.id.artist_element_name)).setText(artistModel.name);
         return view;
     }
 }

@@ -9,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.d954mas.android.yandextest.ArtistBean;
 import com.d954mas.android.yandextest.R;
-import com.d954mas.android.yandextest.ViewPagerAdapter;
+import com.d954mas.android.yandextest.adapters.ViewPagerAdapter;
+import com.d954mas.android.yandextest.models.ArtistModel;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class ArtistListFragment extends Fragment {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
-    private List<ArtistBean> data;
+    private List<ArtistModel> data;
 
     @Nullable
     @Override
@@ -39,12 +39,12 @@ public class ArtistListFragment extends Fragment {
         return root;
     }
 
-    public void setData(List<ArtistBean> artistBeans){
+    public void setData(List<ArtistModel> artistModels){
         if(viewPagerAdapter!=null){
-            viewPagerAdapter.setData(artistBeans);
+            viewPagerAdapter.setData(artistModels);
         }
        else{
-            data=artistBeans;
+            data= artistModels;
         }
 
     }

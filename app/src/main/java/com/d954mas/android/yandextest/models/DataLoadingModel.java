@@ -5,7 +5,6 @@ import android.database.Observable;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.d954mas.android.yandextest.ArtistBean;
 import com.d954mas.android.yandextest.utils.CacheHelper;
 
 import org.json.JSONArray;
@@ -31,7 +30,7 @@ public class DataLoadingModel {
     private final DataLoadingObservable mObservable = new DataLoadingObservable();
     private LoadAsyncTask loadingTask;
     private boolean isWorking;
-    private List<ArtistBean> artists;
+    private List<ArtistModel> artists;
 
     public DataLoadingModel() {
     }
@@ -64,7 +63,7 @@ public class DataLoadingModel {
         mObservable.unregisterObserver(observer);
     }
 
-    public List<ArtistBean> getArtists() {
+    public List<ArtistModel> getArtists() {
         return artists;
     }
 
@@ -122,7 +121,7 @@ public class DataLoadingModel {
             return json;
         }
 
-        protected List<ArtistBean> readArtistJson(){
+        protected List<ArtistModel> readArtistJson(){
             if(artists!=null){
                 Log.i(TAG,"already loaded");
                 return artists;
@@ -144,10 +143,10 @@ public class DataLoadingModel {
 
             JSONArray artistList = null;
             try {
-                List<ArtistBean> artist = new ArrayList<>();
+                List<ArtistModel> artist = new ArrayList<>();
                 artistList = new JSONArray(jsonString);
                 for (int i = 0; i < artistList.length(); i++) {
-                    artist.add(new ArtistBean(artistList.getJSONObject(i)));
+                    artist.add(new ArtistModel(artistList.getJSONObject(i)));
                 }
                 Collections.sort(artist, (lhs, rhs) -> lhs.name.compareTo(rhs.name));
                 return artist;

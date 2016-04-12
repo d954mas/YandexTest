@@ -1,4 +1,4 @@
-package com.d954mas.android.yandextest;
+package com.d954mas.android.yandextest.models;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by user on 09.04.2016.
  */
-public class ArtistBean {
+public class ArtistModel {
     private String url;
     protected JSONObject json;
 
@@ -23,11 +23,11 @@ public class ArtistBean {
     public String link;
     public String description;
 
-    public ArtistBean(){
+    public ArtistModel(){
         genres=new ArrayList<>();
     }
 
-    public ArtistBean(JSONObject artist){
+    public ArtistModel(JSONObject artist){
         this();
         changeData(artist);
     }

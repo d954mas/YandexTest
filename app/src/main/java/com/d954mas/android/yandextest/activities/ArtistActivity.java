@@ -1,4 +1,4 @@
-package com.d954mas.android.yandextest.activity;
+package com.d954mas.android.yandextest.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,8 +8,8 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.d954mas.android.yandextest.ArtistBean;
 import com.d954mas.android.yandextest.R;
+import com.d954mas.android.yandextest.models.ArtistModel;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
@@ -25,21 +25,21 @@ public class ArtistActivity extends AppCompatActivity {
         Intent intent=getIntent();
         if(intent!=null){
             try {
-                ArtistBean artistBean=new ArtistBean(new JSONObject(intent.getStringExtra("artist")));
+                ArtistModel artistModel =new ArtistModel(new JSONObject(intent.getStringExtra("artist")));
                 ImageView imageView= ((ImageView) findViewById(R.id.artist_big_image));
                 imageView.setImageBitmap(null);
-                setTitle(artistBean.name);
-                ImageLoader.getInstance().displayImage(artistBean.bigImageUrl, imageView);
-                ((TextView) findViewById(R.id.artist_biography)).setText(artistBean.description);
+                setTitle(artistModel.name);
+                ImageLoader.getInstance().displayImage(artistModel.bigImageUrl, imageView);
+                ((TextView) findViewById(R.id.artist_biography)).setText(artistModel.description);
                 StringBuilder builder=new StringBuilder();
-                for(String genre:artistBean.genres){
+                for(String genre: artistModel.genres){
                     builder.append(genre);
                     builder.append(", ");
                 }
                 builder.delete(builder.length() - 2, builder.length());
                 ((TextView) findViewById(R.id.artist_genres)).setText(builder.toString());
-                ((TextView) findViewById(R.id.artist_songs)).setText(artistBean.tracks+" "+getStringForSongs(artistBean.tracks));
-                ((TextView) findViewById(R.id.artist_albums)).setText(artistBean.albums+" "+getStringForAlbum(artistBean.albums));
+                ((TextView) findViewById(R.id.artist_songs)).setText(artistModel.tracks+" "+getStringForSongs(artistModel.tracks));
+                ((TextView) findViewById(R.id.artist_albums)).setText(artistModel.albums+" "+getStringForAlbum(artistModel.albums));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

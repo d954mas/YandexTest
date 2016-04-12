@@ -9,10 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
-import com.d954mas.android.yandextest.ArtistArrayAdapter;
-import com.d954mas.android.yandextest.ArtistBean;
 import com.d954mas.android.yandextest.R;
-import com.d954mas.android.yandextest.activity.ArtistActivity;
+import com.d954mas.android.yandextest.activities.ArtistActivity;
+import com.d954mas.android.yandextest.adapters.ArtistArrayAdapter;
+import com.d954mas.android.yandextest.models.ArtistModel;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ import java.util.List;
 public class ArtistsFragment extends Fragment {
 
     private View root;
-    private List<ArtistBean> artists;
+    private List<ArtistModel> artists;
 
     public ArtistsFragment() {
        // setRetainInstance(true);
@@ -44,9 +44,9 @@ public class ArtistsFragment extends Fragment {
                 ArtistArrayAdapter adapter = new ArtistArrayAdapter(getContext(), artists);
                 lvMain.setAdapter(adapter);
                 lvMain.setOnItemClickListener((parent, view, position, id) -> {
-                    ArtistBean artistBean= (ArtistBean) adapter.getItem(position);
+                    ArtistModel artistModel = (ArtistModel) adapter.getItem(position);
                     Intent intent=new Intent(getContext(),ArtistActivity.class);
-                    intent.putExtra("artist",artistBean.getJson().toString());
+                    intent.putExtra("artist", artistModel.getJson().toString());
                     startActivity(intent);
                 });
             }
@@ -55,7 +55,7 @@ public class ArtistsFragment extends Fragment {
         return root;
     }
 
-    public void setData(List<ArtistBean> artists){
+    public void setData(List<ArtistModel> artists){
         this.artists = artists;
     }
 }

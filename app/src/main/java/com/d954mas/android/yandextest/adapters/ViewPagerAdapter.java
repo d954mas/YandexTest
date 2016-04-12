@@ -1,4 +1,4 @@
-package com.d954mas.android.yandextest;
+package com.d954mas.android.yandextest.adapters;
 
 /**
  * Created by user on 10.04.2016.
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.d954mas.android.yandextest.fragments.ArtistsFragment;
 import com.d954mas.android.yandextest.fragments.GenresFragment;
+import com.d954mas.android.yandextest.models.ArtistModel;
 
 import java.util.List;
 
@@ -20,9 +21,9 @@ import java.util.List;
 public class ViewPagerAdapter extends FragmentPagerAdapter {
     protected ArtistsFragment artistsFragment;
     protected GenresFragment genresFragment;
-    private List<ArtistBean> data;
+    private List<ArtistModel> data;
 
-    public void setData(List<ArtistBean> data) {
+    public void setData(List<ArtistModel> data) {
         this.data = data;
     }
 
