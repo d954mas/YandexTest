@@ -4,11 +4,10 @@
     android:layout_height="match_parent"
     tools:context=".fragments.GenresFragment">
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/genres_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textSize="30dp"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.RecyclerView>
 
 </FrameLayout>

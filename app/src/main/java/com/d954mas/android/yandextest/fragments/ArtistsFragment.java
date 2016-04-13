@@ -4,15 +4,17 @@ package com.d954mas.android.yandextest.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
 import com.d954mas.android.yandextest.R;
 import com.d954mas.android.yandextest.activities.ArtistActivity;
 import com.d954mas.android.yandextest.adapters.ArtistArrayAdapter;
+import com.d954mas.android.yandextest.adapters.RecyclerItemClickListener;
 import com.d954mas.android.yandextest.models.ArtistModel;
 import com.d954mas.android.yandextest.utils.DataSingleton;
 
@@ -23,17 +25,14 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class ArtistsFragment extends Fragment {
-    private static final String GRID_VIEW_KEY="gridViewKey";
     private static final String TAG="ArtistsFragment";
 
     private View root;
     private List<ArtistModel> artists;
-    private GridView lvMain;
+    private RecyclerView lvMain;
     private ArtistArrayAdapter adapter;
 
     public ArtistsFragment() {
-       // setRetainInstance(true);
-        // Required empty public constructor
     }
 
 
@@ -45,18 +44,19 @@ public class ArtistsFragment extends Fragment {
         Log.i(TAG,"on create view");
         artists= DataSingleton.get().getArtists();
         if(artists!=null){
-            lvMain = (GridView) root.findViewById(R.id.artist_list);
-            adapter = new ArtistArrayAdapter(getContext(), artists);
+            lvMain = (RecyclerView) root.findViewById(R.id.artist_list);
+            adapter = new ArtistArrayAdapter(artists);
+            GridLayoutManager gridLayoutManager=new GridLayoutManager(getContext(),2);
+            lvMain.setLayoutManager(gridLayoutManager);
             lvMain.setAdapter(adapter);
-            lvMain.setOnItemClickListener((parent, view, position, id) -> {
-                ArtistModel artistModel = (ArtistModel) adapter.getItem(position);
+            lvMain.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), (view, position) -> {
+                Log.i(TAG, "Item cliced:" + position);
+                ArtistModel artistModel = artists.get(position);
                 Intent intent=new Intent(getContext(),ArtistActivity.class);
                 intent.putExtra("artist", artistModel.getJson().toString());
                 startActivity(intent);
-                });
-        }
-        if(savedInstanceState!=null){
-            lvMain.onRestoreInstanceState(savedInstanceState.getParcelable(GRID_VIEW_KEY));
+
+            }));
         }
         return root;
     }
@@ -70,7 +70,6 @@ public class ArtistsFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.i(TAG,"save instance state");
-        outState.putParcelable(GRID_VIEW_KEY, lvMain.onSaveInstanceState());
     }
 
     @Override

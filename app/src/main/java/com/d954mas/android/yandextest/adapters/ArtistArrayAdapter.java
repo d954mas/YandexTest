@@ -1,10 +1,9 @@
 package com.d954mas.android.yandextest.adapters;
 
-import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,44 +16,46 @@ import java.util.List;
 /**
  * Created by user on 09.04.2016.
  */
-public class ArtistArrayAdapter extends BaseAdapter{
+public class ArtistArrayAdapter extends RecyclerView.Adapter<ArtistArrayAdapter.ArtistViewHolder>{
     protected List<ArtistModel> data;
-    protected LayoutInflater lInflater;
 
-
-    public ArtistArrayAdapter(Context context, List<ArtistModel> data){
+    public ArtistArrayAdapter(List<ArtistModel> data){
         this.data = data;
-        lInflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
-    public int getCount() {
+    public ArtistViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        // create a new view
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.artist_list_item, parent, false);
+        // set the view's size, margins, paddings and layout parameters
+        ArtistViewHolder vh = new ArtistViewHolder(v);
+        return vh;
+    }
+
+    @Override
+    public void onBindViewHolder(ArtistViewHolder holder, int position) {
+        // - get element from your dataset at this position
+        // - replace the contents of the view with that element
+        holder.imageView.setImageBitmap(null);
+        ArtistModel artistModel = data.get(position);
+        ImageLoader.getInstance().displayImage(artistModel.smallImageUrl, holder.imageView);
+        holder.textView.setText(artistModel.name);
+    }
+
+
+    @Override
+    public int getItemCount() {
         return data.size();
     }
 
-    @Override
-    public Object getItem(int position) {
-        return data.get(position);
-    }
 
-    @Override
-    public long getItemId(int position) {
-        return data.get(position).id;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // используем созданные, но не используемые view
-        View view = convertView;
-        if (view == null) {
-           view = lInflater.inflate(R.layout.artist_list_item, parent, false);
+    protected static class ArtistViewHolder extends RecyclerView.ViewHolder{
+        private final ImageView imageView;
+        private final TextView textView;
+        public ArtistViewHolder(View itemView) {
+            super(itemView);
+            imageView= ((ImageView) itemView.findViewById(R.id.artist_element_image));
+            textView=((TextView) itemView.findViewById(R.id.artist_element_name));
         }
-        ImageView imageView= ((ImageView) view.findViewById(R.id.artist_element_image));
-        imageView.setImageBitmap(null);
-        ArtistModel artistModel = (ArtistModel) getItem(position);
-        ImageLoader.getInstance().displayImage(artistModel.smallImageUrl,imageView);
-                ((TextView) view.findViewById(R.id.artist_element_name)).setText(artistModel.name);
-        return view;
     }
 }
