@@ -16,7 +16,6 @@ import com.d954mas.android.yandextest.activities.ArtistActivity;
 import com.d954mas.android.yandextest.adapters.ArtistArrayAdapter;
 import com.d954mas.android.yandextest.adapters.RecyclerItemClickListener;
 import com.d954mas.android.yandextest.models.ArtistModel;
-import com.d954mas.android.yandextest.utils.DataSingleton;
 
 import java.util.List;
 
@@ -42,7 +41,6 @@ public class ArtistsFragment extends Fragment {
         // Inflate the layout for this fragment
         root= inflater.inflate(R.layout.fragment_artists, container, false);
         Log.i(TAG,"on create view");
-        artists= DataSingleton.get().getArtists();
         if(artists!=null){
             lvMain = (RecyclerView) root.findViewById(R.id.artist_list);
             adapter = new ArtistArrayAdapter(artists);
@@ -81,5 +79,20 @@ public class ArtistsFragment extends Fragment {
     public void setData(List<ArtistModel> artists){
         Log.i(TAG,"setData");
         this.artists = artists;
+        if(root!=null){
+            lvMain = (RecyclerView) root.findViewById(R.id.artist_list);
+            adapter = new ArtistArrayAdapter(artists);
+            GridLayoutManager gridLayoutManager=new GridLayoutManager(getContext(),2);
+            lvMain.setLayoutManager(gridLayoutManager);
+            lvMain.setAdapter(adapter);
+            lvMain.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), (view, position) -> {
+                Log.i(TAG, "Item cliced:" + position);
+                ArtistModel artistModel = artists.get(position);
+                Intent intent=new Intent(getContext(),ArtistActivity.class);
+                intent.putExtra("artist", artistModel.getJson().toString());
+                startActivity(intent);
+
+            }));
+        }
     }
 }

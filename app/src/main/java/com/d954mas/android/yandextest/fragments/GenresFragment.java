@@ -1,6 +1,7 @@
 package com.d954mas.android.yandextest.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.d954mas.android.yandextest.R;
+import com.d954mas.android.yandextest.activities.ArtistGenreListActivity;
 import com.d954mas.android.yandextest.adapters.GenreArrayAdapter;
 import com.d954mas.android.yandextest.adapters.RecyclerItemClickListener;
 import com.d954mas.android.yandextest.utils.DataSingleton;
@@ -45,10 +47,9 @@ public class GenresFragment extends Fragment {
             lvMain.setAdapter(adapter);
             lvMain.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), (view, position) -> {
                 Log.i(TAG, "Item cliced:" + position);
-                // ArtistModel artistModel = DataSingleton.get().getArtists().get(position);
-                //Intent intent=new Intent(getContext(),ArtistActivity.class);
-                //intent.putExtra("artist", artistModel.getJson().toString());
-                //startActivity(intent);
+                Intent intent=new Intent(getContext(),ArtistGenreListActivity.class);
+                intent.putExtra("genre", genres.get(position));
+                startActivity(intent);
             }));
         }
         return root;
