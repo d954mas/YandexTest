@@ -3,6 +3,7 @@ package com.d954mas.android.yandextest.adapters;
 /**
  * Created by user on 10.04.2016.
  */
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -11,25 +12,12 @@ import android.view.ViewGroup;
 
 import com.d954mas.android.yandextest.fragments.ArtistsFragment;
 import com.d954mas.android.yandextest.fragments.GenresFragment;
-import com.d954mas.android.yandextest.models.ArtistModel;
 import com.d954mas.android.yandextest.utils.DataSingleton;
-
-import java.util.List;
 
 /**
  * Created by Admin on 11-12-2015.
  */
 public class ViewPagerAdapter extends FragmentPagerAdapter {
-    protected ArtistsFragment artistsFragment;
-    protected GenresFragment genresFragment;
-    private List<ArtistModel> data;
-
-    public void setData(List<ArtistModel> data) {
-        this.data = data;
-        if(artistsFragment!=null){
-            artistsFragment.setData(data);
-        }
-    }
 
     public ViewPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -40,12 +28,11 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         Log.i("ViewPagerAdapter","getItem: "+position);
         switch (position){
             case 0:{
-                artistsFragment=new ArtistsFragment();
-                artistsFragment.setData(DataSingleton.get().getArtists());
+                ArtistsFragment artistsFragment = new ArtistsFragment();
                 return artistsFragment;
             }
             case 1:{
-                genresFragment=new GenresFragment();
+                GenresFragment genresFragment = new GenresFragment();
                 return genresFragment;
             }
             default:return null;
@@ -58,13 +45,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         Log.i("ViewPagerAdapter","instantiateItemItem: "+position);
         switch (position){
             case 0:
-                artistsFragment= (ArtistsFragment) o;
+                ArtistsFragment artistsFragment = (ArtistsFragment) o;
                 artistsFragment.setData(DataSingleton.get().getArtists());
                 break;
-            case 1:{
-                genresFragment= (GenresFragment) o;
-                break;
-            }
         }
         return o;
     }
@@ -77,20 +60,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position){
-            case 0:return "All";
-            case 1:return "Genres";
+            case 0:return "Все";
+            case 1:return "По жанрам";
             default:return "";
         }
     }
-
-
-    public ArtistsFragment getArtistsFragment() {
-        return artistsFragment;
-    }
-
-    public GenresFragment getGenresFragment() {
-        return genresFragment;
-    }
-
-
 }

@@ -10,11 +10,13 @@ import android.widget.TextView;
 
 import com.d954mas.android.yandextest.R;
 import com.d954mas.android.yandextest.models.ArtistModel;
+import com.d954mas.android.yandextest.utils.TextUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+//активити для отображения всей информации об одном артисте
 public class ArtistActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,25 +40,12 @@ public class ArtistActivity extends AppCompatActivity {
                 }
                 builder.delete(builder.length() - 2, builder.length());
                 ((TextView) findViewById(R.id.artist_genres)).setText(builder.toString());
-                ((TextView) findViewById(R.id.artist_songs)).setText(artistModel.tracks+" "+getStringForSongs(artistModel.tracks));
-                ((TextView) findViewById(R.id.artist_albums)).setText(artistModel.albums+" "+getStringForAlbum(artistModel.albums));
+                ((TextView) findViewById(R.id.artist_songs)).setText(artistModel.tracks + " " + TextUtils.getStringByNumber(artistModel.tracks, "песня", "песни", "песен"));
+                ((TextView) findViewById(R.id.artist_albums)).setText(artistModel.albums+" "+TextUtils.getStringByNumber(artistModel.tracks, "альбом", "альбома", "альбомов"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    protected String getStringForSongs(int songs){
-        songs=songs%10;
-        if(songs==1)return "песня";
-        else if(songs<5)return "песни";
-        else return "песен";
-    }
-    protected String getStringForAlbum(int songs){
-        songs=songs%10;
-        if(songs==1)return "альбом";
-        else if(songs<5)return "альбома";
-        else return "альбомов";
     }
 
     @Override
@@ -65,11 +54,7 @@ public class ArtistActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
-
-
-
+        return super.onOptionsItemSelected(item);
     }
 }

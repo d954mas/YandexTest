@@ -13,9 +13,7 @@ import com.d954mas.android.yandextest.utils.DataSingleton;
 
 import java.util.List;
 
-/**
- * Created by user on 13.04.2016.
- */
+//активити для отображения всех артистов одного жанра
 public class ArtistGenreListActivity extends AppCompatActivity{
 
     @Override
@@ -23,7 +21,9 @@ public class ArtistGenreListActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         Intent intent=getIntent();
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         setContentView(R.layout.activity_artist_genre_list);
         if(intent!=null){
             String genre=intent.getStringExtra("genre");

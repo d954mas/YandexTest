@@ -23,19 +23,13 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class GenresFragment extends Fragment {
-
-
     private static final String TAG = "GenresFragment";
     private List<String> genres;
-
-    public GenresFragment() {
-
-    }
+    public GenresFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_genres, container, false);
         Log.i(TAG, "on create view");
         genres = DataSingleton.get().getGenres();
