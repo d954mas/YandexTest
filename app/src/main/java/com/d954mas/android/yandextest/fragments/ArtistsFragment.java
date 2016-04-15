@@ -40,7 +40,14 @@ public class ArtistsFragment extends Fragment {
                              Bundle savedInstanceState) {
         root= inflater.inflate(R.layout.fragment_artists, container, false);
         Log.i(TAG,"on create view");
-        //забиваем начальные данные тк без них теряется позиция скрола
+        lvMain = (RecyclerView) root.findViewById(R.id.artist_list);
+        lvMain.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), (view, position) -> {
+            Log.i(TAG, "Item cliced:" + position);
+            ArtistModel artistModel = artists.get(position);
+            Intent intent=new Intent(getContext(),ArtistActivity.class);
+            intent.putExtra("artist", artistModel.getJson().toString());
+            startActivity(intent);
+        }));
         artists= DataSingleton.get().getArtists();
         dataChanged(artists);
         return root;
@@ -49,18 +56,11 @@ public class ArtistsFragment extends Fragment {
     protected void dataChanged(List<ArtistModel> artists){
         if(root!=null){
             Log.i(TAG,"data changed");
-            lvMain = (RecyclerView) root.findViewById(R.id.artist_list);
             adapter = new ArtistArrayAdapter(artists);
             GridLayoutManager gridLayoutManager=new GridLayoutManager(getContext(),2);
             lvMain.setLayoutManager(gridLayoutManager);
             lvMain.setAdapter(adapter);
-            lvMain.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), (view, position) -> {
-                Log.i(TAG, "Item cliced:" + position);
-                ArtistModel artistModel = artists.get(position);
-                Intent intent=new Intent(getContext(),ArtistActivity.class);
-                intent.putExtra("artist", artistModel.getJson().toString());
-                startActivity(intent);
-            }));
+
         }
     }
 
