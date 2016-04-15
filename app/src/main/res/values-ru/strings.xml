@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Исполнители</string>
+    <string name="biography">Биография</string>
+    <string name="artistListTitle">Исполнители</string>
+
+    <string name="no_intenet_message">Проверьте подключение и повторите попытку</string>
+    <string name="retry_connect">Повторить попытку</string>
+    <string name="all">Все</string>
+    <string name="byGenre">По жанрам</string>
+    <plurals name="numberOfSongs">
+        <item quantity="zero">%d песен</item>
+        <item quantity="one">%d песня</item>
+        <item quantity="few">%d песни </item>
+        <item quantity="many">%d песен</item>
+        <item quantity="other">%d песен</item>
+    </plurals>
+
+    <plurals name="numberOfAlbums">
+        <item quantity="zero">%d альбомов</item>
+        <item quantity="one">%d альбом</item>
+        <item quantity="few">%d альбома </item>
+        <item quantity="many">%d альбомов</item>
+        <item quantity="other">%d альбомов</item>
+    </plurals>
+
+</resources>

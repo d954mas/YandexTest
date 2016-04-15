@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements DataLoadingModel.
         ActionBar actionBar=getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayShowHomeEnabled(true);
-            actionBar.setTitle("Исполнители");
+            actionBar.setTitle(R.string.app_name);
         }
 
         //получаем фрагмент для загрузки данных(если он уже был создан)

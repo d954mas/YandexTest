@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.d954mas.android.yandextest.R;
 import com.d954mas.android.yandextest.models.ArtistModel;
-import com.d954mas.android.yandextest.utils.TextUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONException;
@@ -40,8 +39,8 @@ public class ArtistActivity extends AppCompatActivity {
                 }
                 builder.delete(builder.length() - 2, builder.length());
                 ((TextView) findViewById(R.id.artist_genres)).setText(builder.toString());
-                ((TextView) findViewById(R.id.artist_songs)).setText(artistModel.tracks + " " + TextUtils.getStringByNumber(artistModel.tracks, "песня", "песни", "песен"));
-                ((TextView) findViewById(R.id.artist_albums)).setText(artistModel.albums+" "+TextUtils.getStringByNumber(artistModel.tracks, "альбом", "альбома", "альбомов"));
+                ((TextView) findViewById(R.id.artist_songs)).setText(getResources().getQuantityString(R.plurals.numberOfSongs,artistModel.tracks,artistModel.tracks));
+                ((TextView) findViewById(R.id.artist_albums)).setText(getResources().getQuantityString(R.plurals.numberOfAlbums,artistModel.albums,artistModel.albums));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

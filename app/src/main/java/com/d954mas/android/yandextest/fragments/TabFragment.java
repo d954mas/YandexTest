@@ -29,7 +29,7 @@ public class TabFragment extends Fragment {
         View root= inflater.inflate(R.layout.tab_fragment,container,false);
         tabLayout = (TabLayout) root.findViewById(R.id.tabLayout);
         viewPager = (ViewPager) root.findViewById(R.id.viewPager);
-        viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager());
+        viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(),getString(R.string.all),getString(R.string.byGenre));
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         return root;

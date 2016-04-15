@@ -1,10 +1,20 @@
 <resources>
-    <string name="app_name">Исполнители</string>
-    <string name="biography">Биография</string>
-    <string name="artistListTitle">Исполнители</string>
+    <string name="app_name">Singers</string>
+    <string name="biography">Biography</string>
+    <string name="artistListTitle">Singers</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="no_intenet_message">Проверьте подключение и повторите попытку</string>
-    <string name="retry_connect">Повторить попытку</string>
+    <string name="no_intenet_message">Check your connection and try again</string>
+    <string name="retry_connect">Retry</string>
+    <string name="all">all</string>
+    <string name="byGenre">by Genre</string>
+    <plurals name="numberOfSongs">
+        <item quantity="one">%d song</item>
+        <item quantity="other">%d songs</item>
+    </plurals>
+
+    <plurals name="numberOfAlbums">
+        <item quantity="one">%d album</item>
+        <item quantity="other">%d albums</item>
+    </plurals>
 </resources>

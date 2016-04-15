@@ -19,8 +19,13 @@ import com.d954mas.android.yandextest.utils.DataSingleton;
  */
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
-    public ViewPagerAdapter(FragmentManager fm) {
+    private final String firstTitle;
+    private final String secondTitle;
+
+    public ViewPagerAdapter(FragmentManager fm,String firstTitle,String secondTitle) {
         super(fm);
+        this.firstTitle = firstTitle;
+        this.secondTitle = secondTitle;
     }
 
     @Override
@@ -60,8 +65,8 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position){
-            case 0:return "Все";
-            case 1:return "По жанрам";
+            case 0:return firstTitle;
+            case 1:return secondTitle;
             default:return "";
         }
     }
