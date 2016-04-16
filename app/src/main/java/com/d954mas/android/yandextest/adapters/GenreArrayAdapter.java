@@ -44,4 +44,7 @@ public class GenreArrayAdapter extends RecyclerView.Adapter<GenreArrayAdapter.Ge
             textView=((TextView) itemView.findViewById(R.id.genre_element_name));
         }
     }
+    public void setData(List<String> data) {
+        this.data = data;
+    }
 }

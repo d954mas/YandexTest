@@ -1,15 +1,11 @@
 package com.d954mas.android.yandextest.activities;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 
 import com.d954mas.android.yandextest.R;
 import com.d954mas.android.yandextest.fragments.DataLoadingFragment;
@@ -68,24 +64,6 @@ public class MainActivity extends AppCompatActivity implements DataLoadingModel.
         dataLoadingModel.unregisterObserver(this);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.action_bar_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-       switch (item.getItemId()){
-           case R.id.search:
-               Intent intent=new Intent(this,SearchActivity.class);
-               startActivityForResult(intent, 0);
-               return true;
-       }
-        return super.onOptionsItemSelected(item);
-
-    }
 
     //DATA LOADING LISTENERS
     @Override

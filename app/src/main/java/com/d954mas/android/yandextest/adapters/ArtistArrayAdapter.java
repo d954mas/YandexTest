@@ -22,6 +22,10 @@ public class ArtistArrayAdapter extends RecyclerView.Adapter<ArtistArrayAdapter.
         this.data = data;
     }
 
+    public void setData(List<ArtistModel> data) {
+        this.data = data;
+    }
+
     @Override
     public ArtistViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.artist_list_item, parent, false);

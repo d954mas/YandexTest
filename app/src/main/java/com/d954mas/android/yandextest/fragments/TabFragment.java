@@ -1,5 +1,6 @@
 package com.d954mas.android.yandextest.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import com.d954mas.android.yandextest.R;
 import com.d954mas.android.yandextest.adapters.ViewPagerAdapter;
@@ -32,6 +34,24 @@ public class TabFragment extends Fragment {
         viewPagerAdapter = new ViewPagerAdapter(getChildFragmentManager(),getString(R.string.all),getString(R.string.byGenre));
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                final InputMethodManager imm = (InputMethodManager)getContext().getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(viewPager.getWindowToken(), 0);
+            }
+        });
         return root;
     }
 }
