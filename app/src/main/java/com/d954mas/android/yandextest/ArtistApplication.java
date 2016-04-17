@@ -34,6 +34,7 @@ public class ArtistApplication extends Application {
         // or you can create default configuration by
         //  ImageLoaderConfiguration.createDefault(this);
         // method.
+
         ImageLoaderConfiguration.Builder config = new ImageLoaderConfiguration.Builder(context);
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                  .showImageOnLoading(R.mipmap.ic_stub) // resource or drawable

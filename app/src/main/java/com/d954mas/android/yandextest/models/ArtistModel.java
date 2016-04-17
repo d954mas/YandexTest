@@ -54,9 +54,8 @@ public class ArtistModel {
 
             description=json.getString("description");
             if(!description.isEmpty()){//игнорируем пустые строки
-                description=Character.toUpperCase(description.charAt(0))+description.substring(1,description.length()-1);
+                description=Character.toUpperCase(description.charAt(0))+description.substring(1,description.length());
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
