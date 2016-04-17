@@ -9,9 +9,6 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 
 import java.util.List;
 
-/**
- * Created by user on 17.04.2016.
- */
 public abstract class ArrayAdapter<DATA,VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
     private static final String TAG = "ArrayAdapter";
     protected List<DATA> data;
@@ -31,7 +28,7 @@ public abstract class ArrayAdapter<DATA,VH extends RecyclerView.ViewHolder> exte
     public void onBindViewHolder(VH holder, int position) {
         Log.d(TAG, "onBindViewHolder:" + position);
         holder.itemView.clearAnimation();
-        int translationY=0;
+        int translationY;
         if (position>lastPosition){
             translationY=300;
         }else{

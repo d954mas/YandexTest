@@ -6,11 +6,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/**
- * Created by user on 09.04.2016.
- */
+
 public class ArtistModel {
-    private String url;
     protected JSONObject json;
 
     public long id;

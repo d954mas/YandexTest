@@ -27,7 +27,6 @@
                     android:layout_height="20dp"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="genre name"
                     android:id="@+id/genre_element_name" />
             </LinearLayout>
         </LinearLayout>

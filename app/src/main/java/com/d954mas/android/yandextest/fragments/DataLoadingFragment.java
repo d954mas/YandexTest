@@ -5,9 +5,7 @@ import android.support.v4.app.Fragment;
 
 import com.d954mas.android.yandextest.models.DataLoadingModel;
 
-/**
- * Created by user on 11.04.2016.
- */
+
 public class DataLoadingFragment extends Fragment {
     private final DataLoadingModel dataLoadingModel;
 

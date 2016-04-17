@@ -8,9 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
-/**
- * Created by user on 10.04.2016.
- */
+
 public class CacheHelper {
     private static final String TAG="CacheHelper";
     private static final String directory="/CachedStrings/";

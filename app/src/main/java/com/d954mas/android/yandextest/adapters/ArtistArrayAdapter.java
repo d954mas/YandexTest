@@ -13,9 +13,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
-/**
- * Created by user on 09.04.2016.
- */
+
 public class ArtistArrayAdapter extends ArrayAdapter<ArtistModel,ArtistArrayAdapter.ArtistViewHolder> {
     public ArtistArrayAdapter(List<ArtistModel> data) {
         super(data);
@@ -26,8 +24,7 @@ public class ArtistArrayAdapter extends ArrayAdapter<ArtistModel,ArtistArrayAdap
     public ArtistViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         super.onCreateViewHolder(parent, viewType);
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.artist_list_item, parent, false);
-        ArtistViewHolder vh = new ArtistViewHolder(v);
-        return vh;
+        return new ArtistViewHolder(v);
     }
 
     @Override

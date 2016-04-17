@@ -10,9 +10,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
-/**
- * Created by user on 10.04.2016.
- */
+
 public class ArtistApplication extends Application {
 
     @Override

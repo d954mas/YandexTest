@@ -15,9 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.d954mas.android.yandextest.R;
 import com.d954mas.android.yandextest.adapters.ViewPagerAdapter;
 
-/**
- * Created by user on 11.04.2016.
- */
+
 public class TabFragment extends Fragment {
     private static final String TAG="TabFragment";
     private TabLayout tabLayout;

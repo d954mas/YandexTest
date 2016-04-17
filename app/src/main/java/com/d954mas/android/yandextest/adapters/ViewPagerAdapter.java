@@ -1,8 +1,6 @@
 package com.d954mas.android.yandextest.adapters;
 
-/**
- * Created by user on 10.04.2016.
- */
+
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,9 +12,7 @@ import com.d954mas.android.yandextest.fragments.ArtistsFragment;
 import com.d954mas.android.yandextest.fragments.GenresFragment;
 import com.d954mas.android.yandextest.utils.DataSingleton;
 
-/**
- * Created by Admin on 11-12-2015.
- */
+
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     private final String firstTitle;
@@ -33,12 +29,10 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         Log.i("ViewPagerAdapter","getItem: "+position);
         switch (position){
             case 0:{
-                ArtistsFragment artistsFragment = new ArtistsFragment();
-                return artistsFragment;
+                return new ArtistsFragment();
             }
             case 1:{
-                GenresFragment genresFragment = new GenresFragment();
-                return genresFragment;
+                return new GenresFragment();
             }
             default:return null;
         }

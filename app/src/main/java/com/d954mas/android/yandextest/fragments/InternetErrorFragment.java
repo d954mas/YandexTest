@@ -10,10 +10,8 @@ import android.view.ViewGroup;
 import com.d954mas.android.yandextest.R;
 import com.d954mas.android.yandextest.models.DataLoadingModel;
 
-/**
- * Created by user on 11.04.2016.
- */
-public class InternerErrorFragment extends Fragment {
+
+public class InternetErrorFragment extends Fragment {
     DataLoadingModel dataLoadingModel;
 
     public void setDataLoadingModel(DataLoadingModel dataLoadingModel) {
@@ -25,9 +23,7 @@ public class InternerErrorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.internet_error_fragment,container,false);
         if(dataLoadingModel!=null){
-            view.findViewById(R.id.reconnect_button).setOnClickListener(v->{
-                dataLoadingModel.loadData();
-            });
+            view.findViewById(R.id.reconnect_button).setOnClickListener(v-> dataLoadingModel.loadData());
         }else{
             throw new RuntimeException("must have dataLoadingModel");
         }

@@ -13,7 +13,6 @@ import com.d954mas.android.yandextest.utils.DataSingleton;
  * A simple {@link Fragment} subclass.
  */
 public class GenresFragment extends ArrayFragment<String> {
-    protected String TAG = "GenresFragment";
 
     public GenresFragment() {}
 

@@ -15,7 +15,6 @@ import com.d954mas.android.yandextest.utils.DataSingleton;
  * A simple {@link Fragment} subclass.
  */
 public class ArtistsFragment extends ArrayFragment<ArtistModel> {
-    protected String TAG="ArtistsFragment";
 
 
     @Override

@@ -17,9 +17,7 @@ import com.d954mas.android.yandextest.adapters.RecyclerItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by user on 17.04.2016.
- */
+
 public abstract class ArrayFragment<DATA> extends Fragment {
     protected List<DATA>  dataList;
     protected List<DATA>  filteredDataList;
@@ -57,7 +55,7 @@ public abstract class ArrayFragment<DATA> extends Fragment {
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(arrayAdapter);
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getContext(), (view, position) -> {
-            Log.i(TAG, "Item cliced:" + position);
+            Log.i(TAG, "Item clicked:" + position);
             itemClicked(position);
         }));
         return root;

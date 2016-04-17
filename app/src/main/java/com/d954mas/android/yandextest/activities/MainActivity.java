@@ -9,7 +9,7 @@ import android.util.Log;
 
 import com.d954mas.android.yandextest.R;
 import com.d954mas.android.yandextest.fragments.DataLoadingFragment;
-import com.d954mas.android.yandextest.fragments.InternerErrorFragment;
+import com.d954mas.android.yandextest.fragments.InternetErrorFragment;
 import com.d954mas.android.yandextest.fragments.TabFragment;
 import com.d954mas.android.yandextest.models.DataLoadingModel;
 
@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements DataLoadingModel.
     private static final String TAG_TAB = "TAG_TAB";
     DataLoadingModel dataLoadingModel;
     TabFragment tabFragment;
-    InternerErrorFragment internetErrorFragment;
+    InternetErrorFragment internetErrorFragment;
     private ProgressDialog progressDialog;
 
     @Override
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements DataLoadingModel.
 
         if(savedInstanceState==null){
             tabFragment =new TabFragment();
-            internetErrorFragment=new InternerErrorFragment();
+            internetErrorFragment=new InternetErrorFragment();
             internetErrorFragment.setDataLoadingModel(dataLoadingModel);
         }else{
             tabFragment = (TabFragment) getSupportFragmentManager().findFragmentByTag(TAG_TAB);

@@ -13,9 +13,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by user on 11.04.2016.
- */
+
 public class DataLoadingModel {
     //модель для асинхронной загрузки данных.
 
@@ -85,13 +83,13 @@ public class DataLoadingModel {
     }
     private class LoadAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
-        protected String loadAtristsFromWeb() throws IOException {
+        protected String loadArtistsFromWeb() throws IOException {
             URL url = new URL("http://download.cdn.yandex.net/mobilization-2016/artists.json");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
             InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
             String line;
@@ -99,8 +97,7 @@ public class DataLoadingModel {
                 buffer.append(line);
             }
             reader.close();
-            String json = buffer.toString();
-            return json;
+            return buffer.toString();
         }
 
         protected boolean readArtistJson() {
@@ -109,7 +106,7 @@ public class DataLoadingModel {
                 return true;
             } else {
                 try {
-                    String jsonString = loadAtristsFromWeb();
+                    String jsonString = loadArtistsFromWeb();
                     DataSingleton.get().setData(jsonString);
                     return true;
                 } catch (IOException e) {
@@ -119,11 +116,6 @@ public class DataLoadingModel {
                 }
             }
 
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
         }
 
         @Override

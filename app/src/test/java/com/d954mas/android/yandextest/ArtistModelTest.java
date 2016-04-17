@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,8 +14,6 @@ import java.util.List;
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */
 public class ArtistModelTest {
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     private int id=1;
     private String name="name";
     private List<String> genres=new ArrayList();

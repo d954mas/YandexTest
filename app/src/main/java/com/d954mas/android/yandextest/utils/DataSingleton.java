@@ -13,9 +13,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Created by user on 12.04.2016.
- */
+
 public class DataSingleton {
     private static final String TAG="DataSingleton";
     private static final String ARTIST_JSON_KEY = "cachedArtists";

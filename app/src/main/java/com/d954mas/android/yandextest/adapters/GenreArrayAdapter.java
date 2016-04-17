@@ -10,9 +10,7 @@ import com.d954mas.android.yandextest.R;
 
 import java.util.List;
 
-/**
- * Created by user on 13.04.2016.
- */
+
 public class GenreArrayAdapter extends ArrayAdapter<String,GenreArrayAdapter.GenreViewHolder> {
     public GenreArrayAdapter(List<String> data) {
         super(data);
@@ -22,8 +20,7 @@ public class GenreArrayAdapter extends ArrayAdapter<String,GenreArrayAdapter.Gen
     public GenreViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         super.onCreateViewHolder(parent,viewType);
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.genre_list_item, parent, false);
-        GenreViewHolder vh = new GenreViewHolder(v);
-        return vh;
+        return new GenreViewHolder(v);
     }
 
     @Override
