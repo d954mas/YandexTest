@@ -16,15 +16,11 @@ import java.util.List;
 /**
  * Created by user on 09.04.2016.
  */
-public class ArtistArrayAdapter extends RecyclerView.Adapter<ArtistArrayAdapter.ArtistViewHolder>{
-    protected List<ArtistModel> data;
-    public ArtistArrayAdapter(List<ArtistModel> data){
-        this.data = data;
+public class ArtistArrayAdapter extends ArrayAdapter<ArtistModel,ArtistArrayAdapter.ArtistViewHolder> {
+    public ArtistArrayAdapter(List<ArtistModel> data) {
+        super(data);
     }
 
-    public void setData(List<ArtistModel> data) {
-        this.data = data;
-    }
 
     @Override
     public ArtistViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -40,13 +36,6 @@ public class ArtistArrayAdapter extends RecyclerView.Adapter<ArtistArrayAdapter.
         ImageLoader.getInstance().displayImage(artistModel.smallImageUrl, holder.imageView);
         holder.textView.setText(artistModel.name);
     }
-
-
-    @Override
-    public int getItemCount() {
-        return data.size();
-    }
-
 
     protected static class ArtistViewHolder extends RecyclerView.ViewHolder{
         private final ImageView imageView;

@@ -53,6 +53,9 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
                 ArtistsFragment artistsFragment = (ArtistsFragment) o;
                 artistsFragment.setData(DataSingleton.get().getArtists());
                 break;
+            case 1:
+                GenresFragment genresFragment= (GenresFragment) o;
+                genresFragment.setData(DataSingleton.get().getGenres());
         }
         return o;
     }

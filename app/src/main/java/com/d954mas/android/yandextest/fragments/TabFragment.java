@@ -47,6 +47,7 @@ public class TabFragment extends Fragment {
 
             @Override
             public void onPageScrollStateChanged(int state) {
+                //убираем фокус со строки поиска(скрываем клаву)
                 final InputMethodManager imm = (InputMethodManager)getContext().getSystemService(
                         Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(viewPager.getWindowToken(), 0);

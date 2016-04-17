@@ -13,10 +13,9 @@ import java.util.List;
 /**
  * Created by user on 13.04.2016.
  */
-public class GenreArrayAdapter extends RecyclerView.Adapter<GenreArrayAdapter.GenreViewHolder>{
-    protected List<String> data;
-    public GenreArrayAdapter(List<String> data){
-        this.data = data;
+public class GenreArrayAdapter extends ArrayAdapter<String,GenreArrayAdapter.GenreViewHolder> {
+    public GenreArrayAdapter(List<String> data) {
+        super(data);
     }
 
     @Override
@@ -32,19 +31,11 @@ public class GenreArrayAdapter extends RecyclerView.Adapter<GenreArrayAdapter.Ge
         holder.textView.setText(genre);
     }
 
-    @Override
-    public int getItemCount() {
-        return data.size();
-    }
-
     protected static class GenreViewHolder extends RecyclerView.ViewHolder{
         private final TextView textView;
         public GenreViewHolder(View itemView) {
             super(itemView);
             textView=((TextView) itemView.findViewById(R.id.genre_element_name));
         }
-    }
-    public void setData(List<String> data) {
-        this.data = data;
     }
 }
