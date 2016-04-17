@@ -20,6 +20,7 @@ public class GenreArrayAdapter extends ArrayAdapter<String,GenreArrayAdapter.Gen
 
     @Override
     public GenreViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        super.onCreateViewHolder(parent,viewType);
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.genre_list_item, parent, false);
         GenreViewHolder vh = new GenreViewHolder(v);
         return vh;
@@ -27,6 +28,7 @@ public class GenreArrayAdapter extends ArrayAdapter<String,GenreArrayAdapter.Gen
 
     @Override
     public void onBindViewHolder(GenreViewHolder holder, int position) {
+        super.onBindViewHolder(holder,position);
         String genre = data.get(position);
         holder.textView.setText(genre);
     }

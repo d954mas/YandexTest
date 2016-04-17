@@ -24,6 +24,7 @@ public class ArtistArrayAdapter extends ArrayAdapter<ArtistModel,ArtistArrayAdap
 
     @Override
     public ArtistViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        super.onCreateViewHolder(parent, viewType);
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.artist_list_item, parent, false);
         ArtistViewHolder vh = new ArtistViewHolder(v);
         return vh;
@@ -31,6 +32,8 @@ public class ArtistArrayAdapter extends ArrayAdapter<ArtistModel,ArtistArrayAdap
 
     @Override
     public void onBindViewHolder(ArtistViewHolder holder, int position) {
+        super.onBindViewHolder(holder,position);
+
         holder.imageView.setImageBitmap(null);
         ArtistModel artistModel = data.get(position);
         ImageLoader.getInstance().displayImage(artistModel.smallImageUrl, holder.imageView);

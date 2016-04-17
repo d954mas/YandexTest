@@ -52,6 +52,7 @@ public abstract class ArrayFragment<DATA> extends Fragment {
             }
         });
         recyclerView = (RecyclerView) root.findViewById(R.id.artist_list);
+        recyclerView.setHasFixedSize(true);
         GridLayoutManager gridLayoutManager=new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(arrayAdapter);
