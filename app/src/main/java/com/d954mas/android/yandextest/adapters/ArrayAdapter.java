@@ -9,6 +9,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 
 import java.util.List;
 
+//абстрактный адаптер для всех адаптеров со списком
 public abstract class ArrayAdapter<DATA,VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
     private static final String TAG = "ArrayAdapter";
     protected List<DATA> data;

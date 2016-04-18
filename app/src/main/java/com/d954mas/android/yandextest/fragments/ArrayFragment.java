@@ -17,7 +17,7 @@ import com.d954mas.android.yandextest.adapters.RecyclerItemClickListener;
 import java.util.ArrayList;
 import java.util.List;
 
-
+//родитель всех классов со списком в recycleView и cтрокой поиска(актеры и жанры)
 public abstract class ArrayFragment<DATA> extends Fragment {
     protected List<DATA>  dataList;
     protected List<DATA>  filteredDataList;
@@ -74,6 +74,7 @@ public abstract class ArrayFragment<DATA> extends Fragment {
         arrayAdapter.notifyDataSetChanged();
     }
 
+    //скрываем поиск если мало данных
     protected void dataChanged(){
         arrayAdapter.changeData(filteredDataList);
         if(getView()!=null){
@@ -84,6 +85,7 @@ public abstract class ArrayFragment<DATA> extends Fragment {
                 searchView.setVisibility(View.VISIBLE);
             }
         }
+
     }
 
     public void onPause() {

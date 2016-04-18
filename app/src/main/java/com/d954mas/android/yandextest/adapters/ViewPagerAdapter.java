@@ -42,6 +42,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         Object o= super.instantiateItem(container, position);
         Log.i("ViewPagerAdapter","instantiateItemItem: "+position);
+        //восстанавливаем данные
         switch (position){
             case 0:
                 ArtistsFragment artistsFragment = (ArtistsFragment) o;

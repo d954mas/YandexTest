@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+//Singleton для получения данных об артистах из любого места приложения
 
 public class DataSingleton {
     private static final String TAG="DataSingleton";

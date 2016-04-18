@@ -8,7 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
+//класс для сохранения,получения и удаления строк в файл(кеширования)
 public class CacheHelper {
     private static final String TAG="CacheHelper";
     private static final String directory="/CachedStrings/";

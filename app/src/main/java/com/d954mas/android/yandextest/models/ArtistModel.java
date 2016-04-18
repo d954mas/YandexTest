@@ -6,10 +6,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-
+//Модель артиста,генерируется из jsonObject
 public class ArtistModel {
     protected JSONObject json;
-
     public long id;
     public String name;
     public String smallImageUrl;

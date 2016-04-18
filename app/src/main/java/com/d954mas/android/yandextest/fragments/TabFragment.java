@@ -15,7 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import com.d954mas.android.yandextest.R;
 import com.d954mas.android.yandextest.adapters.ViewPagerAdapter;
 
-
+//фрагмент с табами(все артисты и жанры)
 public class TabFragment extends Fragment {
     private static final String TAG="TabFragment";
     private TabLayout tabLayout;
@@ -35,14 +35,11 @@ public class TabFragment extends Fragment {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
             public void onPageSelected(int position) {
-
             }
-
             @Override
             public void onPageScrollStateChanged(int state) {
                 //убираем фокус со строки поиска(скрываем клаву)

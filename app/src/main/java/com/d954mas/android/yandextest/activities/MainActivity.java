@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements DataLoadingModel.
 
     //DATA LOADING LISTENERS
     @Override
-    public void onSignInStarted(DataLoadingModel signInModel) {
+    public void onLoadingStart(DataLoadingModel signInModel) {
         if(progressDialog==null){
             progressDialog = new ProgressDialog(MainActivity.this);
         }
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements DataLoadingModel.
     }
 
     @Override
-    public void onSignInSucceeded(DataLoadingModel signInModel) {
+    public void onLoadingSucceeded(DataLoadingModel signInModel) {
         Log.i(TAG, "successfully get data");
         progressDialog.dismiss();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager()
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements DataLoadingModel.
     }
 
     @Override
-    public void onSignInFailed(DataLoadingModel signInModel) {
+    public void onLoadingFailed(DataLoadingModel signInModel) {
         progressDialog.dismiss();
         FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();

@@ -13,9 +13,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-
+/*модель для асинхронной загрузки данных.
+Можно подписатся на события:начала загрузки,ошибки,успеха
+//при добавление слушателя,если данные сенйчас грузятся,
+у слушателя вызавется onLoadingStart
+ */
 public class DataLoadingModel {
-    //модель для асинхронной загрузки данных.
+
 
     private static final String TAG = "DataLoadingModel";
 
@@ -46,7 +50,7 @@ public class DataLoadingModel {
     public void registerObserver(final Observer observer) {
         mObservable.registerObserver(observer);
         if (isWorking) {
-            observer.onSignInStarted(this);
+            observer.onLoadingStart(this);
         }
     }
 
@@ -55,29 +59,29 @@ public class DataLoadingModel {
     }
 
     public interface Observer {
-        void onSignInStarted(DataLoadingModel signInModel);
+        void onLoadingStart(DataLoadingModel signInModel);
 
-        void onSignInSucceeded(DataLoadingModel signInModel);
+        void onLoadingSucceeded(DataLoadingModel signInModel);
 
-        void onSignInFailed(DataLoadingModel signInModel);
+        void onLoadingFailed(DataLoadingModel signInModel);
     }
 
     private class DataLoadingObservable extends Observable<Observer> {
         public void notifyStarted() {
             for (final Observer observer : mObservers) {
-                observer.onSignInStarted(DataLoadingModel.this);
+                observer.onLoadingStart(DataLoadingModel.this);
             }
         }
 
         public void notifySucceeded() {
             for (final Observer observer : mObservers) {
-                observer.onSignInSucceeded(DataLoadingModel.this);
+                observer.onLoadingSucceeded(DataLoadingModel.this);
             }
         }
 
         public void notifyFailed() {
             for (final Observer observer : mObservers) {
-                observer.onSignInFailed(DataLoadingModel.this);
+                observer.onLoadingFailed(DataLoadingModel.this);
             }
         }
     }
@@ -123,7 +127,6 @@ public class DataLoadingModel {
             return readArtistJson();
         }
 
-        //Освобождаем ресурсы(Bitmap)
         @Override
         protected void onPostExecute(Boolean success) {
             super.onPostExecute(success);
