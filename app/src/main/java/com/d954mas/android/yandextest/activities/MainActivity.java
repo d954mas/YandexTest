@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements DataLoadingModel.
     private static final String TAG = "MainActivity";
     private static final String TAG_DATA_LOADING = "TAG_DATA_LOADING";
     private static final String TAG_TAB = "TAG_TAB";
+    private static final String TAG_ERROR = "TAG_ERROR";
     DataLoadingModel dataLoadingModel;
     TabFragment tabFragment;
     InternetErrorFragment internetErrorFragment;
@@ -46,13 +47,6 @@ public class MainActivity extends AppCompatActivity implements DataLoadingModel.
             dataLoadingModel = dataLoadingFragment.getDataLoadingModel();
         }
 
-        if(savedInstanceState==null){
-            tabFragment =new TabFragment();
-            internetErrorFragment=new InternetErrorFragment();
-            internetErrorFragment.setDataLoadingModel(dataLoadingModel);
-        }else{
-            tabFragment = (TabFragment) getSupportFragmentManager().findFragmentByTag(TAG_TAB);
-        }
         dataLoadingModel.registerObserver(this);
         //грузим данные,если они уже загруженны,то массив вернется сразу
         dataLoadingModel.loadData();
@@ -81,18 +75,30 @@ public class MainActivity extends AppCompatActivity implements DataLoadingModel.
     public void onLoadingSucceeded(DataLoadingModel signInModel) {
         Log.i(TAG, "successfully get data");
         progressDialog.dismiss();
+
+        tabFragment = (TabFragment) getSupportFragmentManager().findFragmentByTag(TAG_TAB);
+        if(tabFragment==null){
+            tabFragment =new TabFragment();
+        }
         FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
         fragmentTransaction.replace(R.id.container, tabFragment, TAG_TAB);
         fragmentTransaction.commit();
+
     }
 
     @Override
     public void onLoadingFailed(DataLoadingModel signInModel) {
         progressDialog.dismiss();
+
+        internetErrorFragment=(InternetErrorFragment) getSupportFragmentManager().findFragmentByTag(TAG_ERROR);
+        if(internetErrorFragment==null){
+            internetErrorFragment=new InternetErrorFragment();
+        }
+        internetErrorFragment.setDataLoadingModel(dataLoadingModel);
         FragmentTransaction fragmentTransaction = getSupportFragmentManager()
                 .beginTransaction();
-        fragmentTransaction.replace(R.id.container, internetErrorFragment);
+        fragmentTransaction.replace(R.id.container, internetErrorFragment,TAG_ERROR);
         fragmentTransaction.commit();
         Log.i(TAG, "failed get data");
     }

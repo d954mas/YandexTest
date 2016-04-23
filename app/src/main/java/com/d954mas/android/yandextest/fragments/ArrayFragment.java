@@ -23,7 +23,7 @@ public abstract class ArrayFragment<DATA> extends Fragment {
     protected List<DATA>  filteredDataList;
     protected RecyclerView recyclerView;
     private SearchView searchView;
-    private ArrayAdapter arrayAdapter;
+    private ArrayAdapter<DATA,RecyclerView.ViewHolder> arrayAdapter;
     protected String TAG="ArrayFragment";
 
     public ArrayFragment(){
@@ -79,10 +79,12 @@ public abstract class ArrayFragment<DATA> extends Fragment {
         arrayAdapter.changeData(filteredDataList);
         if(getView()!=null){
             Log.i(TAG, "data changed");
-            if(searchView!=null && dataList.size()<6){
-                searchView.setVisibility(View.GONE);
-            }else{
-                searchView.setVisibility(View.VISIBLE);
+            if(searchView!=null){
+                if(dataList.size()<6){
+                    searchView.setVisibility(View.GONE);
+                }else{
+                    searchView.setVisibility(View.VISIBLE);
+                }
             }
         }
 
@@ -114,7 +116,7 @@ public abstract class ArrayFragment<DATA> extends Fragment {
 
     protected abstract String getSearchName(int position);
 
-    protected abstract ArrayAdapter getArrayAdapter();
+    protected abstract ArrayAdapter<DATA,RecyclerView.ViewHolder> getArrayAdapter();
 
     protected abstract void itemClicked(int position);
 

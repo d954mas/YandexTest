@@ -15,6 +15,9 @@ public class InternetErrorFragment extends Fragment {
 
     public void setDataLoadingModel(DataLoadingModel dataLoadingModel) {
         this.dataLoadingModel = dataLoadingModel;
+        if(getView()!=null){
+            getView().findViewById(R.id.reconnect_button).setOnClickListener(v-> dataLoadingModel.loadData());
+        }
     }
 
     @Override
@@ -22,8 +25,6 @@ public class InternetErrorFragment extends Fragment {
         View view= inflater.inflate(R.layout.internet_error_fragment,container,false);
         if(dataLoadingModel!=null){
             view.findViewById(R.id.reconnect_button).setOnClickListener(v-> dataLoadingModel.loadData());
-        }else{
-            throw new RuntimeException("must have dataLoadingModel");
         }
         return view;
     }
