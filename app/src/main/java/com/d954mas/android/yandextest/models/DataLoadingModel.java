@@ -87,21 +87,35 @@ public class DataLoadingModel {
     }
     private class LoadAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
-        protected String loadArtistsFromWeb() throws IOException {
-            URL url = new URL("http://download.cdn.yandex.net/mobilization-2016/artists.json");
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuilder buffer = new StringBuilder();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
-            String line;
-            while ((line = reader.readLine()) != null) {
-                buffer.append(line);
+        protected String loadArtistsFromWeb() {
+            URL url = null;
+            BufferedReader reader = null;
+            String result=null;
+            try {
+                url = new URL("http://download.cdn.yandex.net/mobilization-2016/artists.json");
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+                InputStream inputStream = urlConnection.getInputStream();
+                StringBuilder buffer = new StringBuilder();
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    buffer.append(line);
+                }
+                result=buffer.toString();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            reader.close();
-            return buffer.toString();
+            finally {
+                if(reader!=null) try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return result;
+
         }
 
         protected boolean readArtistJson() {
@@ -109,14 +123,13 @@ public class DataLoadingModel {
                 Log.i(TAG, "already loaded");
                 return true;
             } else {
-                try {
-                    String jsonString = loadArtistsFromWeb();
+                String jsonString = loadArtistsFromWeb();
+                if (jsonString == null) {
+                    Log.i(TAG, "failed to load data");
+                    return false;
+                } else {
                     DataSingleton.get().setData(jsonString);
                     return true;
-                } catch (IOException e) {
-                    Log.i(TAG, "failed to load data");
-                    e.printStackTrace();
-                    return false;
                 }
             }
 
