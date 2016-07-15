@@ -1,21 +1,25 @@
 package com.d954mas.android.yandextest.fragments;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 
-import android.content.Intent;
-import android.support.v4.app.Fragment;
-
-import com.d954mas.android.yandextest.activities.ArtistActivity;
+import com.d954mas.android.yandextest.R;
 import com.d954mas.android.yandextest.adapters.ArrayAdapter;
 import com.d954mas.android.yandextest.adapters.ArtistArrayAdapter;
 import com.d954mas.android.yandextest.models.ArtistModel;
 import com.d954mas.android.yandextest.utils.DataSingleton;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ArtistsFragment extends ArrayFragment<ArtistModel> {
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        init();
+    }
+
+    protected void init() {
+        setData(DataSingleton.get().getArtists());
+    }
 
     @Override
     protected String getSearchName(int position) {
@@ -30,8 +34,10 @@ public class ArtistsFragment extends ArrayFragment<ArtistModel> {
     @Override
     protected void itemClicked(int position) {
         ArtistModel artistModel = filteredDataList.get(position);
-        Intent intent=new Intent(getContext(),ArtistActivity.class);
-        intent.putExtra("artist", artistModel.getJson().toString());
-        startActivity(intent);
+        ArtistFragment artistFragment=new ArtistFragment();
+        artistFragment.setData(artistModel);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container,artistFragment)
+                .addToBackStack(null).commit();
     }
 }

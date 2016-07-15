@@ -68,4 +68,5 @@ public class MainActivity extends AppCompatActivity {
             outState.putBoolean(LOADING_DONE,defaultLoadingObserver.isLoadingDone());
         }
     }
+
 }
