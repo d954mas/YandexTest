@@ -2,29 +2,32 @@ package com.d954mas.android.yandextest;
 
 import android.app.Application;
 import android.content.Context;
-
-import com.d954mas.android.yandextest.utils.DataSingleton;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
-
 public class ArtistApplication extends Application {
+
+    private ApplicationComponent component;
 
     @Override
     public void onCreate() {
+
         super.onCreate();
-        DataSingleton.init(getApplicationContext());
+        component = DaggerApplicationComponent
+                .builder()
+                .androidModule(new AndroidModule(this))
+                .build();
+
         initImageLoader(getApplicationContext());
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
-        DataSingleton.dispose();
-
+        //never called
     }
 
     public static void initImageLoader(Context context) {
@@ -52,6 +55,14 @@ public class ArtistApplication extends Application {
 
         // Initialize ImageLoader with configuration.
         ImageLoader.getInstance().init(config.build());
+    }
+
+    public static ArtistApplication from(Context context) {
+        return (ArtistApplication) context.getApplicationContext();
+    }
+
+    public ApplicationComponent getComponent() {
+        return component;
     }
 }
 

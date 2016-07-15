@@ -8,22 +8,24 @@ import com.d954mas.android.yandextest.models.ArtistModel;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 //Singleton для получения данных об артистах из любого места приложения
-
+@Singleton
 public class DataSingleton {
     private static final String TAG="DataSingleton";
     private static final String ARTIST_JSON_KEY = "cachedArtists";
-    private static DataSingleton dataSingleton;
     private Context context;
     private List<ArtistModel> artists;
     private HashMap<String,List<ArtistModel>> artistsByGenre;
 
-    private DataSingleton(Context context){
+    @Inject
+    DataSingleton(Context context){
         this.context=context;
         String jsonString=CacheHelper.readCacheString(context, ARTIST_JSON_KEY);
         if(jsonString!=null){
@@ -63,14 +65,6 @@ public class DataSingleton {
         }
     }
 
-    public static void init(Context context){
-        if(dataSingleton!=null){
-            throw new RuntimeException("singleton must be init once");
-        }else{
-            dataSingleton=new DataSingleton(context);
-        }
-    }
-
     public void setData(String json){
         artists=parseData(json);
     }
@@ -81,14 +75,6 @@ public class DataSingleton {
 
     public List<ArtistModel> getArtists() {
         return artists;
-    }
-
-    public static DataSingleton get(){
-        return dataSingleton;
-    }
-
-    public static void dispose(){
-        dataSingleton=null;
     }
 
     public List<String> getGenres() {
