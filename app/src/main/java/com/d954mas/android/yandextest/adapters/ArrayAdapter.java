@@ -3,7 +3,6 @@ package com.d954mas.android.yandextest.adapters;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
@@ -21,13 +20,13 @@ public abstract class ArrayAdapter<DATA,VH extends RecyclerView.ViewHolder> exte
 
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d(TAG, "onCreateViewHolder:");
+        //Log.d(TAG, "onCreateViewHolder:");
         return null;
     }
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
-        Log.d(TAG, "onBindViewHolder:" + position);
+     //   Log.d(TAG, "onBindViewHolder:" + position);
         holder.itemView.clearAnimation();
         int translationY;
         if (position>lastPosition){

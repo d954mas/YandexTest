@@ -16,6 +16,7 @@ import com.d954mas.android.yandextest.fragments.AboutFragment;
 import com.d954mas.android.yandextest.fragments.DataLoadingFragment;
 import com.d954mas.android.yandextest.models.DataLoadingModel;
 import com.d954mas.android.yandextest.models.DefaultLoadingObserver;
+import com.d954mas.android.yandextest.utils.HeadsetReceiver;
 
 /**
  * Created by user on 7/14/16.
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     DataLoadingModel dataLoadingModel;
     private DefaultLoadingObserver defaultLoadingObserver;
     private ActionBar actionBar;
+    private HeadsetReceiver headsetReceiver;
 
     //главная активити приложени,получает данные с сервера,и отображает, либо фрагмент м данными,либо фрагмент с ошибкой полученя данных
     @Override
@@ -42,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setTitle(R.string.app_name);
             actionBar.setDisplayHomeAsUpEnabled(false);
         }
+        headsetReceiver=new HeadsetReceiver(this);
+        //headsetReceiver.show();
     }
 
     @Override
@@ -82,6 +86,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        headsetReceiver.resume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        headsetReceiver.pause();
     }
 
     private void loading() {
