@@ -2,6 +2,11 @@ package com.d954mas.android.yandextest.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.d954mas.android.yandextest.utils.DataSingleton;
 
@@ -20,6 +25,16 @@ public class GenreFragment extends ArtistsFragment {
             genre=savedInstanceState.getString(GENRE);
             setGenre(genre);
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ActionBar actionBar=((AppCompatActivity)getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(genre);
+        }
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override

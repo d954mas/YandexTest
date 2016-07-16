@@ -2,8 +2,10 @@ package com.d954mas.android.yandextest.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.d954mas.android.yandextest.R;
 import com.d954mas.android.yandextest.fragments.DataLoadingFragment;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentManager manager;
     DataLoadingModel dataLoadingModel;
     private DefaultLoadingObserver defaultLoadingObserver;
+    private ActionBar actionBar;
 
     //главная активити приложени,получает данные с сервера,и отображает, либо фрагмент м данными,либо фрагмент с ошибкой полученя данных
     @Override
@@ -26,10 +29,35 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         manager=getSupportFragmentManager();
-        if(savedInstanceState==null || !savedInstanceState.getBoolean(LOADING_DONE,true)){
+        if(savedInstanceState==null || !savedInstanceState.getBoolean(LOADING_DONE,true)) {
             loading();
         }
+        actionBar=getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(R.string.app_name);
+            actionBar.setDisplayHomeAsUpEnabled(false);
+        }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                getSupportFragmentManager().popBackStack();
+                if(getSupportFragmentManager().getBackStackEntryCount()==1){
+                    actionBar.setDisplayHomeAsUpEnabled(false);
+                    actionBar.setTitle(R.string.app_name);
+                }
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     private void loading() {
         Log.d(TAG,"loading");
         String TAG_DATA_LOADING = "TAG_DATA_LOADING";
