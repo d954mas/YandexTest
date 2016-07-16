@@ -1,13 +1,17 @@
 package com.d954mas.android.yandextest.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.d954mas.android.yandextest.R;
+import com.d954mas.android.yandextest.fragments.AboutFragment;
 import com.d954mas.android.yandextest.fragments.DataLoadingFragment;
 import com.d954mas.android.yandextest.models.DataLoadingModel;
 import com.d954mas.android.yandextest.models.DefaultLoadingObserver;
@@ -49,8 +53,27 @@ public class MainActivity extends AppCompatActivity {
                     actionBar.setTitle(R.string.app_name);
                 }
                 return true;
+            case R.id.about:
+                getSupportFragmentManager().beginTransaction().replace(R.id.container,new AboutFragment())
+                        .addToBackStack(null).commit();
+                return true;
+            case R.id.feedback:
+                Intent Email = new Intent(Intent.ACTION_SEND);
+                Email.setType("text/email");
+                Email.putExtra(Intent.EXTRA_EMAIL, new String[] { "someemail@gmail.com" });
+                Email.putExtra(Intent.EXTRA_SUBJECT, "Feedback");
+                Email.putExtra(Intent.EXTRA_TEXT, "Dear d954mas, your app is awesome" + "");
+                startActivity(Intent.createChooser(Email, "Send Feedback:"));
+                return true;
+
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
     }
 
     @Override

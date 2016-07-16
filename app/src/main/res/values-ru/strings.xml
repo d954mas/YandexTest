@@ -7,6 +7,8 @@
     <string name="retry_connect">Повторить попытку</string>
     <string name="all">Все</string>
     <string name="byGenre">По жанрам</string>
+    <string name="about">О программе</string>
+    <string name="feedback">Обратная связь</string>
     <plurals name="numberOfSongs">
         <item quantity="one">%d песня</item>
         <item quantity="few">%d песни </item>
