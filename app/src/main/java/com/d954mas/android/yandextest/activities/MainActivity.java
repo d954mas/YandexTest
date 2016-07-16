@@ -1,6 +1,7 @@
 package com.d954mas.android.yandextest.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
@@ -58,12 +59,14 @@ public class MainActivity extends AppCompatActivity {
                         .addToBackStack(null).commit();
                 return true;
             case R.id.feedback:
-                Intent Email = new Intent(Intent.ACTION_SEND);
-                Email.setType("text/email");
-                Email.putExtra(Intent.EXTRA_EMAIL, new String[] { "someemail@gmail.com" });
-                Email.putExtra(Intent.EXTRA_SUBJECT, "Feedback");
-                Email.putExtra(Intent.EXTRA_TEXT, "Dear d954mas, your app is awesome" + "");
-                startActivity(Intent.createChooser(Email, "Send Feedback:"));
+                String uriText =
+                        "mailto:someemail@gmail.com" +
+                                "?subject=" + Uri.encode("feedback") +
+                                "&body=" + Uri.encode("Dear d954mas, your app is awesome");
+                Uri uri = Uri.parse(uriText);
+                Intent sendIntent = new Intent(Intent.ACTION_SENDTO);
+                sendIntent.setData(uri);
+                startActivity(Intent.createChooser(sendIntent, "Send Feedback"));
                 return true;
 
         }
