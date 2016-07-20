@@ -9,10 +9,6 @@ import com.d954mas.android.yandextest.R;
 import com.d954mas.android.yandextest.fragments.InternetErrorFragment;
 import com.d954mas.android.yandextest.fragments.TabFragment;
 
-/**
- * Created by user on 7/15/16.
- */
-
 public class DefaultLoadingObserver implements DataLoadingModel.Observer {
 
     private ProgressDialog progressDialog;
@@ -62,8 +58,6 @@ public class DefaultLoadingObserver implements DataLoadingModel.Observer {
 
     public void dispose(){
         if(progressDialog!=null)progressDialog.dismiss();
-        progressDialog=null;
-        context=null;
     }
 
     public boolean isLoadingDone(){

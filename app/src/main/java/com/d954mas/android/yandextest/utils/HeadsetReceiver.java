@@ -18,32 +18,32 @@ import com.d954mas.android.yandextest.R;
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 
-/**
- * Created by user on 7/16/16.
- */
-
 public class HeadsetReceiver extends BroadcastReceiver {
-    private static  final String TAG="HeadsetReceiver";
-    private static final String BUTTON_CLICK_ACTION="BUTTON_CLICK_ACTION";
-    private static final String MUSIC="MUSIC";
-    private static final String RADIO="RADIO";
+    private static final String TAG = "HeadsetReceiver";
+    private static final String BUTTON_CLICK_ACTION = "BUTTON_CLICK_ACTION";
+    private static final String MUSIC = "MUSIC";
+    private static final String RADIO = "RADIO";
     private final Context context;
     private final NotificationManager nm;
 
-    public HeadsetReceiver(Context context){
+    public HeadsetReceiver(Context context) {
         this.context = context;
         nm = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
     }
-    public void resume(){
+
+    public void resume() {
         context.registerReceiver(this, new IntentFilter(BUTTON_CLICK_ACTION));
-        context.registerReceiver(this,new IntentFilter(Intent.ACTION_HEADSET_PLUG));
+        context.registerReceiver(this, new IntentFilter(Intent.ACTION_HEADSET_PLUG));
     }
-    public void pause(){
+
+    public void pause() {
         context.unregisterReceiver(this);
         hide();
     }
-    @Override public void onReceive(Context context, Intent intent) {
-        switch (intent.getAction()){
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        switch (intent.getAction()) {
             case Intent.ACTION_HEADSET_PLUG:
                 int state = intent.getIntExtra("state", -1);
                 switch (state) {
@@ -61,26 +61,25 @@ public class HeadsetReceiver extends BroadcastReceiver {
                 return;
             case BUTTON_CLICK_ACTION:
                 String type = intent.getStringExtra("type");
-                switch (type){
+                switch (type) {
                     case MUSIC:
-                        Log.d(TAG,"music");
+                        Log.d(TAG, "music");
                         openApp("ru.yandex.music");
                         return;
                     case RADIO:
-                        Log.d(TAG,"radio");
+                        Log.d(TAG, "radio");
                         openApp("ru.yandex.radio");
                         return;
                 }
                 return;
-
         }
     }
 
-    public void show(){
+    public void show() {
         createNotification();
     }
 
-    public void hide(){
+    public void hide() {
         nm.cancel(0);
     }
 
@@ -118,7 +117,7 @@ public class HeadsetReceiver extends BroadcastReceiver {
             } catch (android.content.ActivityNotFoundException anfe) {
                 context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
             }
-        }else{
+        } else {
             i.addCategory(Intent.CATEGORY_LAUNCHER);
             context.startActivity(i);
         }
