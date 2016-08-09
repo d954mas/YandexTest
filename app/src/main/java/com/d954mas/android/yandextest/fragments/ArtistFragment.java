@@ -1,5 +1,6 @@
 package com.d954mas.android.yandextest.fragments;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -44,15 +45,16 @@ public class ArtistFragment extends Fragment{
         imageView.setImageBitmap(null);
         ImageLoader.getInstance().displayImage(artistModel.bigImageUrl, imageView);
         ((TextView) view.findViewById(R.id.artist_biography)).setText(artistModel.description);
-        StringBuilder builder=new StringBuilder();
+        StringBuilder builder = new StringBuilder(artistModel.genres.size() * 6);
         for(String genre: artistModel.genres){
             builder.append(genre);
             builder.append(", ");
         }
+        Resources resources = getResources();
         builder.delete(builder.length() - 2, builder.length());
         ((TextView) view.findViewById(R.id.artist_genres)).setText(builder.toString());
-        ((TextView) view.findViewById(R.id.artist_songs)).setText(getResources().getQuantityString(R.plurals.numberOfSongs,artistModel.tracks,artistModel.tracks));
-        ((TextView) view.findViewById(R.id.artist_albums)).setText(getResources().getQuantityString(R.plurals.numberOfAlbums,artistModel.albums,artistModel.albums));
+        ((TextView) view.findViewById(R.id.artist_songs)).setText(resources.getQuantityString(R.plurals.numberOfSongs, artistModel.tracks, artistModel.tracks));
+        ((TextView) view.findViewById(R.id.artist_albums)).setText(resources.getQuantityString(R.plurals.numberOfAlbums, artistModel.albums, artistModel.albums));
         return view;
     }
 
