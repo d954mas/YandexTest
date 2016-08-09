@@ -3,11 +3,15 @@
     <string name="biography">Biography</string>
     <string name="artistListTitle">Singers</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="no_intenet_message">Check your connection and try again</string>
     <string name="retry_connect">Retry</string>
     <string name="all">all</string>
     <string name="byGenre">by Genre</string>
+    <string name="about">About</string>
+    <string name="feedback">Feedback</string>
+    <string name="text_about" translatable="false"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tincidunt at velit id mollis. Donec sed laoreet metus, eget lacinia ipsum. Phasellus lobortis dui turpis, vel faucibus leo porta a. Quisque a pretium metus, et congue erat. Fusce a ultrices eros. Nulla elementum consequat imperdiet. Vestibulum sit amet tellus vehicula, venenatis velit vitae, pulvinar lectus. Sed non vestibulum lorem, a feugiat mi. Suspendisse quis consectetur ligula, non sodales enim. Proin gravida ipsum at molestie blandit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nam vitae erat ut lorem bibendum convallis. Aenean id nisi et elit malesuada dapibus eget bibendum diam.
+
+Aenean odio dolor, vulputate at dignissim sit amet, aliquam non sapien. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin sodales elementum maximus. Nunc volutpat tempus est, ornare pharetra erat placerat ut. Vestibulum elementum euismod tincidunt. Nullam rutrum, nisl in faucibus faucibus, velit diam congue turpis, eget faucibus massa urna eget nisi. In eu metus magna. Ut quis quam imperdiet lorem placerat cursus. Cras vestibulum placerat mauris, vel feugiat dui aliquet id. Suspendisse nec elit pretium, scelerisque risus eu, pellentesque dui. Pellentesque imperdiet mollis efficitur. Fusce quis volutpat est. Donec iaculis nec sem sed scelerisque. Praesent accumsan et nisl vitae varius. In eu nunc metus. </string>
     <plurals name="numberOfSongs">
         <item quantity="one">%d song</item>
         <item quantity="other">%d songs</item>
