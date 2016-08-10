@@ -2,11 +2,11 @@ package com.d954mas.android.yandextest.activities;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
 import com.d954mas.android.yandextest.R;
 import com.d954mas.android.yandextest.fragments.DataLoadingFragment;
 import com.d954mas.android.yandextest.fragments.InternetErrorFragment;
@@ -19,7 +19,8 @@ public class MainActivity extends AppCompatActivity implements DataLoadingModel.
     private static final String TAG_DATA_LOADING = "TAG_DATA_LOADING";
     private static final String TAG_TAB = "TAG_TAB";
     private static final String TAG_ERROR = "TAG_ERROR";
-    DataLoadingModel dataLoadingModel;
+
+    private DataLoadingModel dataLoadingModel;
     TabFragment tabFragment;
     InternetErrorFragment internetErrorFragment;
     private ProgressDialog progressDialog;
@@ -35,15 +36,17 @@ public class MainActivity extends AppCompatActivity implements DataLoadingModel.
         }
 
         //получаем фрагмент для загрузки данных(если он уже был создан)
+        final FragmentManager fm = getSupportFragmentManager();
         final DataLoadingFragment retainDataLoadingFragment =
-                (DataLoadingFragment) getSupportFragmentManager().findFragmentByTag(TAG_DATA_LOADING);
+                (DataLoadingFragment) fm.findFragmentByTag(TAG_DATA_LOADING);
         if (retainDataLoadingFragment != null) {
             dataLoadingModel = retainDataLoadingFragment.getDataLoadingModel();
         } else {
             final DataLoadingFragment dataLoadingFragment = new DataLoadingFragment();
-            getSupportFragmentManager().beginTransaction()
+            fm.beginTransaction()
                     .add(dataLoadingFragment, TAG_DATA_LOADING)
                     .commit();
+            fm.executePendingTransactions(); //in order to invoke DataLoadingFragment.onCreate()
             dataLoadingModel = dataLoadingFragment.getDataLoadingModel();
         }
 
@@ -84,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements DataLoadingModel.
                 .beginTransaction();
         fragmentTransaction.replace(R.id.container, tabFragment, TAG_TAB);
         fragmentTransaction.commit();
-
     }
 
     @Override
@@ -102,5 +104,6 @@ public class MainActivity extends AppCompatActivity implements DataLoadingModel.
         fragmentTransaction.commit();
         Log.i(TAG, "failed get data");
     }
+
 }
 

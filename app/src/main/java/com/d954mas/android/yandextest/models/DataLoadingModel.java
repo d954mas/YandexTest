@@ -3,9 +3,9 @@ package com.d954mas.android.yandextest.models;
 import android.database.Observable;
 import android.os.AsyncTask;
 import android.util.Log;
-
 import com.d954mas.android.yandextest.utils.DataSingleton;
 
+import javax.inject.Inject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,14 +20,16 @@ import java.net.URL;
  */
 public class DataLoadingModel {
 
-
     private static final String TAG = "DataLoadingModel";
 
+    private final DataSingleton dataSingleton;
     private final DataLoadingObservable mObservable = new DataLoadingObservable();
     private LoadAsyncTask loadingTask;
     private boolean isWorking;
 
-    public DataLoadingModel() {
+    @Inject
+    public DataLoadingModel(DataSingleton dataSingleton) {
+        this.dataSingleton = dataSingleton;
     }
 
     public void loadData() {
@@ -119,7 +121,7 @@ public class DataLoadingModel {
         }
 
         protected boolean readArtistJson() {
-            if (DataSingleton.get().hasData()) {
+            if (dataSingleton.hasData()) {
                 Log.i(TAG, "already loaded");
                 return true;
             } else {
@@ -128,7 +130,7 @@ public class DataLoadingModel {
                     Log.i(TAG, "failed to load data");
                     return false;
                 } else {
-                    DataSingleton.get().setData(jsonString);
+                    dataSingleton.setData(jsonString);
                     return true;
                 }
             }

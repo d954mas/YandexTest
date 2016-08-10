@@ -1,6 +1,7 @@
 package com.d954mas.android.yandextest.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +30,11 @@ public abstract class ArrayFragment<DATA> extends Fragment {
     public ArrayFragment(){
         dataList=new ArrayList<>();
         filteredDataList=new ArrayList<>();
+    }
+
+    @Override
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         arrayAdapter=getArrayAdapter();
     }
 
@@ -76,6 +82,9 @@ public abstract class ArrayFragment<DATA> extends Fragment {
 
     //скрываем поиск если мало данных
     protected void dataChanged(){
+        if (!isAdded()) {
+            return;
+        }
         arrayAdapter.changeData(filteredDataList);
         if(getView()!=null){
             Log.i(TAG, "data changed");
